@@ -102,6 +102,7 @@ for (int i = 0; i < 10; i++) {
 }
 for (MClass cls : classes) {
     MField name = cls.addField(String.class, "name").setFinal(true);
+    name.addGetterMethod().setFinal(true);
     cls.addFinalFieldsConstructor();
     int rand = Double.valueOf(10 * Math.random()).intValue();
     MField field = cls.addField(classes.get(rand), "bean0" + rand);
@@ -126,6 +127,10 @@ public class Bean05 {
     public Bean05(String name) {
         super();
         this.name = name;
+    }
+    
+    public final String getName() {
+        return name;
     }
     
     public final synchronized Bean06 getBean06() {
