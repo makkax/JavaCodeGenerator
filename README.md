@@ -112,3 +112,28 @@ boolean clean = false;
 bundle.generateCode(clean);
 // ----------------------------------------------------------------------------------
 ```
+
+One of the classes could look something like this:
+
+```java
+package com.cc.jcg.main;
+
+public class Bean04 {
+    
+    private final String name;
+    private Bean09 getBean09;
+    
+    public Bean04(String name) {
+        super();
+        this.name = name;
+    }
+    
+    public final synchronized Bean09 getGetBean09() {
+        return getBean09;
+    }
+    
+    public final synchronized void setGetBean09(Bean09 getBean09) {
+        this.getBean09 = getBean09;
+    }
+}
+```
