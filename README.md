@@ -88,4 +88,27 @@ public class User {
 
 Each Java generated package, type (class, interface, enum), constructor, field, method and parameter is represented by a Java class that can be directly accessed to create the needed Java code. The imports are automatically handled, generics can be used and references to generated types can be shared in the same MBundle.
 
+Here is another example where 10 classes are generated and each one contains a field referencing himself or another of the other 9 classes:
 
+```java
+// ----------------------------------------------------------------------------------
+MBundle bundle = new MBundle(new File("src-generated"));
+MPackage pckg = bundle.newPackage("com.cc.jcg.main");
+// ----------------------------------------------------------------------------------
+List<MClass> classes = new ArrayList<>();
+for (int i = 0; i < 10; i++) {
+    MClass cls = pckg.newClass("Bean0" + i);
+    classes.add(cls);
+}
+for (MClass cls : classes) {
+    MField name = cls.addField(String.class, "name").setFinal(true);
+    cls.addFinalFieldsConstructor();
+    int rand = Double.valueOf(10 * Math.random()).intValue();
+    MField field = cls.addField(classes.get(rand), "getBean0" + rand);
+    field.addAccessorMethods();
+}
+// ----------------------------------------------------------------------------------
+boolean clean = false;
+bundle.generateCode(clean);
+// ----------------------------------------------------------------------------------
+```
