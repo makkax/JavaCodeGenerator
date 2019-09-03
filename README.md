@@ -88,21 +88,25 @@ public class User {
 
 Each Java generated package, type (class, interface, enum), constructor, field, method and parameter is represented by a Java class that can be directly accessed to create the needed Java code. The imports are automatically handled, generics can be used and references to generated types can be shared in the same MBundle.
 
-Here is another example where 10 classes are generated and each one contains a field referencing himself or another of the other 9 classes:
+Here is another example where 10 classes implementing an interface "Named" are generated and each one contains a field referencing himself or another of the other 9 classes:
 
 ```java
 // ----------------------------------------------------------------------------------
 MBundle bundle = new MBundle(new File("src-generated"));
 MPackage pckg = bundle.newPackage("com.cc.jcg.main");
 // ----------------------------------------------------------------------------------
+MInterface intf = pckg.newInterface("NamedBean");
+intf.addMethod("getName", String.class);
+// ----------------------------------------------------------------------------------
 List<MClass> classes = new ArrayList<>();
 for (int i = 0; i < 10; i++) {
     MClass cls = pckg.newClass("Bean0" + i);
+    cls.addInterface(intf);
     classes.add(cls);
 }
 for (MClass cls : classes) {
     MField name = cls.addField(String.class, "name").setFinal(true);
-    name.addGetterMethod().setFinal(true);
+    name.addGetterMethod().setFinal(true).overrides();
     cls.addFinalFieldsConstructor();
     int rand = Double.valueOf(10 * Math.random()).intValue();
     MField field = cls.addField(classes.get(rand), "bean0" + rand);
@@ -119,26 +123,28 @@ One of the classes could look something like this:
 ```java
 package com.cc.jcg.main;
 
-public class Bean05 {
+public class Bean05
+        implements NamedBean {
     
     private final String name;
-    private Bean06 bean06;
+    private Bean00 bean00;
     
     public Bean05(String name) {
         super();
         this.name = name;
     }
     
+    @Override
     public final String getName() {
         return name;
     }
     
-    public final synchronized Bean06 getBean06() {
-        return bean06;
+    public final synchronized Bean00 getBean00() {
+        return bean00;
     }
     
-    public final synchronized void setBean06(Bean06 bean06) {
-        this.bean06 = bean06;
+    public final synchronized void setBean00(Bean00 bean00) {
+        this.bean00 = bean00;
     }
 }
 ```
