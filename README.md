@@ -108,9 +108,7 @@ Each Java generated element is represented by a Java class that can be directly 
 |                 |  `MTypeRefJava`    = `MTypeRef<Class<?>>`
 |                 |  `MTypeRefModel`   = `MTypeRef<MType>`
 
-![alt text][model]
-
-[model]: https://github.com/alecbigger/JavaCodeGenerator/blob/master/JCG/CodeGeneratorDSL.png "JCG Model"
+[show JCG model](https://github.com/alecbigger/JavaCodeGenerator/blob/master/JCG/CodeGeneratorDSL.png)
 
 ## More Examples
 
