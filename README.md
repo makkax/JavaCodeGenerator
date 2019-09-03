@@ -1,7 +1,7 @@
 # JavaCodeGenerator
 
 JCG is a powerful Java code generator. 
-Unlike most generators, JCG is not based on templates; its a DSL in pure Java!
+Unlike most generators, JCG is not based on templates; its a **DSL in pure Java**!
 
 A simple example can show what that means:
 
@@ -30,7 +30,7 @@ bundle.generateCode(clean);
 // ----------------------------------------------------------------------------------
 ```
 
-The generated class User looks like this:
+The generated class `User` looks like this:
 
 ```java
 package com.cc.jcg.main;
@@ -112,7 +112,7 @@ Each Java generated element is represented by a Java class that can be directly 
 
 ## More Examples
 
-Here is another example where 10 classes implementing an interface "Named" are generated and each one contains a field referencing himself or another of the other 9 classes:
+Here is another example where 10 classes implementing an interface `Named` (also generated) are created and each one contains a field referencing himself or another of the other 9 classes:
 
 ```java
 // ----------------------------------------------------------------------------------
