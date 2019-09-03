@@ -135,8 +135,9 @@ public class MInterface
 	return generic;
     }
 
-    public final synchronized void setGeneric(String generic) {
+    public final synchronized MInterface setGeneric(String generic) {
 	this.generic = MFunctions.getBrackedGeneric(generic);
+	return this;
     }
 
     @Override

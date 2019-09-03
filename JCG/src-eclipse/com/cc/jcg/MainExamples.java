@@ -1,6 +1,7 @@
 package com.cc.jcg;
 
 import java.io.File;
+import java.lang.annotation.Annotation;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-class MainExample {
+class MainExamples {
 
     @Test
     void test01() throws Exception {
@@ -65,6 +66,31 @@ class MainExample {
 	    MField field = cls.addField(classes.get(rand), "bean0" + rand);
 	    field.addAccessorMethods();
 	}
+	// ----------------------------------------------------------------------------------
+	boolean clean = false;
+	bundle.generateCode(clean);
+	// ----------------------------------------------------------------------------------
+    }
+
+    @Test
+    void test03() throws Exception {
+	// ----------------------------------------------------------------------------------
+	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(true);
+	MBundle.GENERATE_READONLY.set(false);
+	// ----------------------------------------------------------------------------------
+	MBundle bundle = new MBundle(new File("src-generated"));
+	MPackage pckg = bundle.newPackage("com.cc.jcg.main");
+	// ----------------------------------------------------------------------------------
+	MInterface intf = pckg.newInterface("Supplier").setGeneric("<T>");
+	intf.addMethod("get", "T");
+	// ----------------------------------------------------------------------------------
+	intf.addAnnotation(new FunctionalInterface() {
+
+	    @Override
+	    public Class<? extends Annotation> annotationType() {
+		return FunctionalInterface.class;
+	    }
+	});
 	// ----------------------------------------------------------------------------------
 	boolean clean = false;
 	bundle.generateCode(clean);
