@@ -21,7 +21,7 @@ public class MBundle
 	implements MGenerator {
 
     public static final AtomicBoolean EXCLUDE_GENERATED_ANNOTATION = new AtomicBoolean(false);
-    public static boolean GENERATE_READONLY = MPackage.GENERATE_READONLY;
+    public static final AtomicBoolean GENERATE_READONLY = MPackage.GENERATE_READONLY;
     private boolean awt;
     private final File srcDir;
     private final File templatesSrcDir;

@@ -341,8 +341,8 @@ abstract class MConstructable<T extends MType>
 	    m.setSynchronized(method.isSynchronized());
 	}
     }
-    // ----------------------------------------------------------------------------------------------------------------------
 
+    // ----------------------------------------------------------------------------------------------------------------------
     public final MMethod moveMethod(MMethod method, int postion) {
 	final LinkedList<MMethod> copy = new LinkedList<MMethod>(methods);
 	copy.remove(method);
