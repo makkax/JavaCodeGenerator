@@ -88,15 +88,17 @@ public class User {
 
 Each Java generated element is represented by a Java class that can be directly accessed to create the needed Java code:
 
-| type          | related type                                                                       
-|:------------- |:-------------------------------------------------------------------------
-| `MBundle`     |  `MPackage`
-| `MPackage`    |  `MType`: `MClass`, `MInterface`, `MEnum`
-| `MInterface`  |  `MMethod`
-| `MClass`      |  `MField`, `MMethod`, `MConstructor`, `MInnerInterface`, `MInnerClass`, `MInnerEnum`
-| `MEnum`       |  `MEnumValue`, `MField`, `MMethod`, `MConstructor` 
-| `MAnnotation` |  `MType`, `MField`, `MMethod`
-| `MTypeRef`    |  `MTypeRefGeneric`, `MTypeRefJava`, `MTypeRefModel`
+| type            | related type                                                                       
+|:--------------- |:-------------------------------------------------------------------------
+| `MBundle`       |  `MPackage`
+| `MPackage`      |  `MType`: `MClass`, `MInterface`, `MEnum`
+| `MInterface`    |  `MMethod`
+| `MClass`        |  `MField`, `MMethod`, `MConstructor`, `MInnerInterface`, `MInnerClass`, `MInnerEnum`
+| `MEnum`         |  `MEnumValue`, `MField`, `MMethod`, `MConstructor` 
+| `MAnnotation`   |  `MType`, `MField`, `MMethod`
+| `MTypeRef<REF>` |  `MTypeRefGeneric` = `MTypeRef<String>`
+|                 |  `MTypeRefJava`    = `MTypeRef<Class<?>>`
+|                 |  `MTypeRefModel`   = `MTypeRef<MType>`
 
 Other highights:
 
