@@ -104,7 +104,7 @@ for (MClass cls : classes) {
     MField name = cls.addField(String.class, "name").setFinal(true);
     cls.addFinalFieldsConstructor();
     int rand = Double.valueOf(10 * Math.random()).intValue();
-    MField field = cls.addField(classes.get(rand), "getBean0" + rand);
+    MField field = cls.addField(classes.get(rand), "bean0" + rand);
     field.addAccessorMethods();
 }
 // ----------------------------------------------------------------------------------
@@ -118,22 +118,22 @@ One of the classes could look something like this:
 ```java
 package com.cc.jcg.main;
 
-public class Bean04 {
+public class Bean05 {
     
     private final String name;
-    private Bean09 getBean09;
+    private Bean06 bean06;
     
-    public Bean04(String name) {
+    public Bean05(String name) {
         super();
         this.name = name;
     }
     
-    public final synchronized Bean09 getGetBean09() {
-        return getBean09;
+    public final synchronized Bean06 getBean06() {
+        return bean06;
     }
     
-    public final synchronized void setGetBean09(Bean09 getBean09) {
-        this.getBean09 = getBean09;
+    public final synchronized void setBean06(Bean06 bean06) {
+        this.bean06 = bean06;
     }
 }
 ```
