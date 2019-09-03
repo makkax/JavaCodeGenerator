@@ -86,7 +86,25 @@ public class User {
 }
 ```
 
-Each Java generated package, type (class, interface, enum), constructor, field, method and parameter is represented by a Java class that can be directly accessed to create the needed Java code. The imports are automatically handled, generics can be used and references to generated types can be shared in the same MBundle.
+Each Java generated element is represented by a Java class that can be directly accessed to create the needed Java code:
+
+| type          | related type                                                                       
+|:------------- |:-------------------------------------------------------------------------
+| `MBundle`     |  `MPackage`
+| `MPackage`    |  `MType`: `MClass`, `MInterface`, `MEnum`
+| `MInterface`  |  `MMethod`
+| `MClass`      |  `MField`, `MMethod`, `MConstructor`, `MInnerInterface`, `MInnerClass`, `MInnerEnum`
+| `MEnum`       |  `MEnumValue`, `MField`, `MMethod`, `MConstructor` 
+| `MAnnotation` |  `MType`, `MField`, `MMethod`
+| `MTypeRef`    |  `MTypeRefGeneric`, `MTypeRefJava`, `MTypeRefModel`
+
+Other highights:
+
+* imports are automatically handled or can be manually added with the method addImport
+* the generated code is automatically indented
+* generated types can be referenced in other Java elements
+* generics can be added to classes, interfaces and methods
+* annotations can be added to classes, interfaces, fields and methods
 
 Here is another example where 10 classes implementing an interface "Named" are generated and each one contains a field referencing himself or another of the other 9 classes:
 
