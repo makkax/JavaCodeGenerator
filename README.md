@@ -88,11 +88,11 @@ public class User {
 ```
 Other highights:
 
-* imports are automatically handled or can be manually added with the method `addImport`
-* the generated code is automatically indented
-* generated types can be referenced in other Java elements
-* generics can be added to classes, interfaces and methods
-* annotations can be added to classes, interfaces, fields and methods
+* **imports** are automatically handled or can be manually added with the method `addImport`
+* the generated code is automatically **indented**
+* generated types can be **referenced** in other Java elements (see `MTypeRef<REF>`)
+* **Generics** can be added to classes, interfaces and methods
+* **Annotations** can be added to classes, interfaces, fields and methods
 
 Each Java generated element is represented by a Java class that can be directly accessed to create the needed Java code:
 
@@ -170,5 +170,40 @@ public class Bean05
     public final synchronized void setBean00(Bean00 bean00) {
         this.bean00 = bean00;
     }
+}
+```
+
+To generate a `FunctionalInterface` we can write:
+
+```java
+// ----------------------------------------------------------------------------------
+MBundle bundle = new MBundle(new File("src-generated"));
+MPackage pckg = bundle.newPackage("com.cc.jcg.main");
+// ----------------------------------------------------------------------------------
+MInterface intf = pckg.newInterface("Supplier").setGeneric("<T>");
+intf.addMethod("get", "T");
+// ----------------------------------------------------------------------------------
+intf.addAnnotation(new FunctionalInterface() {
+
+    @Override
+    public Class<? extends Annotation> annotationType() {
+    return FunctionalInterface.class;
+    }
+});
+// ----------------------------------------------------------------------------------
+boolean clean = false;
+bundle.generateCode(clean);
+// ----------------------------------------------------------------------------------
+```
+
+to obtain
+
+```java
+package com.cc.jcg.main;
+
+@FunctionalInterface
+public interface Supplier<T> {
+    
+    T get();
 }
 ```
