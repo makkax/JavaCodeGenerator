@@ -1,6 +1,6 @@
 # JavaCodeGenerator
 
-JCG is a powerful Java code generator. Differently from most generators, JCG is not based on templates; its a DSL in pure Java!
+JCG is a powerful Java code generator. Unlike most generators, JCG is not based on templates; its a DSL in pure Java!
 
 A simple example can show what that means:
 
