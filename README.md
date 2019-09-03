@@ -1,6 +1,7 @@
 # JavaCodeGenerator
 
-JCG is a powerful Java code generator. Unlike most generators, JCG is not based on templates; its a DSL in pure Java!
+JCG is a powerful Java code generator. 
+Unlike most generators, JCG is not based on templates; its a DSL in pure Java!
 
 A simple example can show what that means:
 
@@ -85,6 +86,13 @@ public class User {
     }
 }
 ```
+Other highights:
+
+* imports are automatically handled or can be manually added with the method `addImport`
+* the generated code is automatically indented
+* generated types can be referenced in other Java elements
+* generics can be added to classes, interfaces and methods
+* annotations can be added to classes, interfaces, fields and methods
 
 Each Java generated element is represented by a Java class that can be directly accessed to create the needed Java code:
 
@@ -100,13 +108,11 @@ Each Java generated element is represented by a Java class that can be directly 
 |                 |  `MTypeRefJava`    = `MTypeRef<Class<?>>`
 |                 |  `MTypeRefModel`   = `MTypeRef<MType>`
 
-Other highights:
+![alt text][model]
 
-* imports are automatically handled or can be manually added with the method `addImport`
-* the generated code is automatically indented
-* generated types can be referenced in other Java elements
-* generics can be added to classes, interfaces and methods
-* annotations can be added to classes, interfaces, fields and methods
+[model]: https://github.com/alecbigger/JavaCodeGenerator/blob/master/JCG/CodeGeneratorDSL.png "JCG Model"
+
+## More Examples
 
 Here is another example where 10 classes implementing an interface "Named" are generated and each one contains a field referencing himself or another of the other 9 classes:
 
