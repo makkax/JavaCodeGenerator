@@ -102,7 +102,7 @@ Each Java generated element is represented by a Java class that can be directly 
 
 Other highights:
 
-* imports are automatically handled or can be manually added with the method addImport
+* imports are automatically handled or can be manually added with the method `addImport`
 * the generated code is automatically indented
 * generated types can be referenced in other Java elements
 * generics can be added to classes, interfaces and methods
