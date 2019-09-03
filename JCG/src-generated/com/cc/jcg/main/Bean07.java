@@ -1,23 +1,26 @@
 package com.cc.jcg.main;
 
-import com.cc.jcg.MGenerated;
-
-@MGenerated
-public class Bean07 {
+public class Bean07
+        implements NamedBean {
     
     private final String name;
-    private Bean06 getBean06;
+    private Bean03 bean03;
     
     public Bean07(String name) {
         super();
         this.name = name;
     }
     
-    public final synchronized Bean06 getGetBean06() {
-        return getBean06;
+    @Override
+    public final String getName() {
+        return name;
     }
     
-    public final synchronized void setGetBean06(Bean06 getBean06) {
-        this.getBean06 = getBean06;
+    public final synchronized Bean03 getBean03() {
+        return bean03;
+    }
+    
+    public final synchronized void setBean03(Bean03 bean03) {
+        this.bean03 = bean03;
     }
 }

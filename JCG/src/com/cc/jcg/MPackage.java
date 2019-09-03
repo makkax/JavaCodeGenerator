@@ -28,7 +28,7 @@ public class MPackage
 	extends MFunctions
 	implements MGenerator {
 
-    public static boolean GENERATE_READONLY = true;
+    public static AtomicBoolean GENERATE_READONLY = new AtomicBoolean(true);
     private final File dir;
     private final String name;
     private final LinkedHashSet<MInterface> interfaces = new LinkedHashSet<MInterface>();
@@ -616,7 +616,7 @@ public class MPackage
 	    if (type instanceof MType && ((MType) type).isTemplate()) {
 		output.setWritable(true);
 	    } else {
-		output.setWritable(!GENERATE_READONLY);
+		output.setWritable(!GENERATE_READONLY.get());
 	    }
 	} else {
 	    System.out.println("LOCKED " + output.getAbsolutePath() + " is not overwritten");
