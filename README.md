@@ -240,7 +240,7 @@ The following example generates a new Enumeration `TaskState` with a correspondi
 MBundle bundle = new MBundle(new File("src-generated"));
 MPackage pckg = bundle.newPackage("com.cc.jcg.main");
 // ----------------------------------------------------------------------------------
-MEnum enm = pckg.newEnum("State");
+MEnum enm = pckg.newEnum("TaskState");
 enm.addValue("READY");
 enm.addValue("RUNNING");
 enm.addValue("FAILED");
