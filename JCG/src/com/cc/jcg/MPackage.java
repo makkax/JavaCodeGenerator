@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.cc.jcg.MClass.MClassModifier;
 import com.cc.jcg.MConstructor.MConstructorModifier;
 import com.cc.jcg.MMethod.MMethodModifier;
 import com.cc.jcg.tools.EncodedFileReader;
@@ -352,6 +353,32 @@ public class MPackage
 	type.addMethod("name", String.class).makePublic().setBlockContent("return name;");
 	for (final Object value : values) {
 	    type.addStaticField(type, value.toString()).makePublic().setFinal(true).setValue("new " + type.getName() + "(\"" + value.toString() + "\");");
+	}
+	return type;
+    }
+
+    public final MClass newEnumDispatcher(Class<? extends Enum<?>> eType, String name) throws ClassNotFoundException {
+	MClass type = newClass(name);
+	type.setAbstract(true);
+	type.setModifier(MClassModifier.PUBLIC);
+	type.setGeneric("R");
+	type.addMethod("dispatch", "R", new MParameter(eType, "value")).setFinal(true).setGenerator(new MCodeGenerator<MMethod>() {
+
+	    @Override
+	    public MCodeBlock getCodeBlock(MMethod element) {
+		MCodeBlock code = element.getCodeBlock(element);
+		code.addLine("switch (value) {");
+		for (Enum<?> value : eType.getEnumConstants()) {
+		    code.addLine("    case " + value.name() + ":");
+		    code.addLine("        return " + value.name() + "();");
+		}
+		code.addLine("}");
+		code.addLine("throw new RuntimeException(\"unexpected value \" + value);");
+		return code;
+	    }
+	});
+	for (Enum<?> value : eType.getEnumConstants()) {
+	    type.addMethod(value.name(), "R").setAbstract(true).setModifier(MMethodModifier.PROTECTED);
 	}
 	return type;
     }
