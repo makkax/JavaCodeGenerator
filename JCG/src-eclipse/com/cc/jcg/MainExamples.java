@@ -35,6 +35,14 @@ class MainExamples {
 	code.append("// TODO: sendActivationEmail(email);");
 	activate.setBlockContent(code);
 	// ----------------------------------------------------------------------------------
+	MMethod deactivate = bean.addMethod("deactivate", void.class);
+	deactivate.setFinal(true);
+	deactivate.setSynchronized(true);
+	deactivate.setCodeBlock(block -> {
+	    block.addLine("active = false;");
+	    block.addLine("// TODO: sendDeactivationEmail(email);");
+	});
+	// ----------------------------------------------------------------------------------
 	boolean clean = false;
 	bundle.generateCode(clean);
 	// ----------------------------------------------------------------------------------
@@ -47,6 +55,7 @@ class MainExamples {
 	MBundle.GENERATE_READONLY.set(false);
 	// ----------------------------------------------------------------------------------
 	MBundle bundle = new MBundle(new File("src-generated"));
+	bundle.setShowProgressbar(true);
 	MPackage pckg = bundle.newPackage("com.cc.jcg.main");
 	// ----------------------------------------------------------------------------------
 	MInterface intf = pckg.newInterface("NamedBean");
@@ -63,7 +72,7 @@ class MainExamples {
 	    name.addGetterMethod().setFinal(true).overrides();
 	    cls.addFinalFieldsConstructor();
 	    int rand = Double.valueOf(10 * Math.random()).intValue();
-	    MField field = cls.addField(classes.get(rand), "bean0" + rand);
+	    MField field = cls.addField(classes.get(rand), "bean");
 	    field.addAccessorMethods();
 	}
 	// ----------------------------------------------------------------------------------

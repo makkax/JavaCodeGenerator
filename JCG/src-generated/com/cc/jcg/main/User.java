@@ -49,4 +49,9 @@ public class User {
         active = true;
         // TODO: sendActivationEmail(email);
     }
+    
+    public final synchronized void deactivate() {
+        active = false;
+        // TODO: sendDeactivationEmail(email);
+    }
 }

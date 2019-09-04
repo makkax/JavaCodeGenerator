@@ -22,7 +22,7 @@ public class MBundle
 
     public static final AtomicBoolean EXCLUDE_GENERATED_ANNOTATION = new AtomicBoolean(false);
     public static final AtomicBoolean GENERATE_READONLY = MPackage.GENERATE_READONLY;
-    private boolean awt;
+    private boolean showProgressbar = false;
     private final File srcDir;
     private final File templatesSrcDir;
     private final String name;
@@ -59,7 +59,6 @@ public class MBundle
 	templatesSrcDir = templatesDir;
 	this.name = name;
 	overrideTemplates = false;
-	awt = true;
 	generatedCodeListener = new MGeneratedCodeListener() {
 
 	    @Override
@@ -144,8 +143,8 @@ public class MBundle
 	this.ensureMapGenerics = ensureMapGenerics;
     }
 
-    public final synchronized MBundle setAwt(boolean awt) {
-	this.awt = awt;
+    public final synchronized MBundle setShowProgressbar(boolean showProgressbar) {
+	this.showProgressbar = showProgressbar;
 	return this;
     }
 
@@ -404,11 +403,11 @@ public class MBundle
     @Override
     public void generateCode(boolean clean) throws Exception {
 	try {
-	    if (awt) {
+	    if (showProgressbar) {
 		SwingProgressBar pb = new SwingProgressBar("Generating " + getName() + " Bundle (clean = " + clean + ")");
 		pb.setMax(packages.size() + bundles.size());
-		pb.start();
 		pb.setDelay(10);
+		pb.start();
 		for (MPackage pckg : packages) {
 		    pb.update("package " + pckg.getName());
 		    pckg.setOverrideTemplates(overrideTemplates);
