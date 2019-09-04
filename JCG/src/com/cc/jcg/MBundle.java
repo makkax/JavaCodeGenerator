@@ -20,7 +20,7 @@ public class MBundle
 	extends MFunctions
 	implements MGenerator {
 
-    public static final AtomicBoolean EXCLUDE_GENERATED_ANNOTATION = new AtomicBoolean(false);
+    public static final AtomicBoolean EXCLUDE_GENERATED_ANNOTATION = new AtomicBoolean(true);
     public static final AtomicBoolean GENERATE_READONLY = MPackage.GENERATE_READONLY;
     private boolean showProgressbar = false;
     private final File srcDir;

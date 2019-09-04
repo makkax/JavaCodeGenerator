@@ -22,12 +22,12 @@ class MainExamples {
 	MBundle bundle = new MBundle(new File("src-generated"));
 	MPackage pckg = bundle.newPackage("com.cc.jcg.main");
 	// ----------------------------------------------------------------------------------
-	Collection<MParameter> fields = new ArrayList<>();
-	fields.add(new MParameter(String.class, "name"));
-	fields.add(new MParameter(String.class, "email"));
-	fields.add(new MParameter(LocalDate.class, "birthday"));
-	fields.add(new MParameter(boolean.class, "active"));
-	MClass bean = pckg.newBean("User", fields);
+	Collection<MParameter> parameters = new ArrayList<>();
+	parameters.add(new MParameter(String.class, "name"));
+	parameters.add(new MParameter(String.class, "email"));
+	parameters.add(new MParameter(LocalDate.class, "birthday"));
+	parameters.add(new MParameter(boolean.class, "active"));
+	MClass bean = pckg.newBean("User", parameters);
 	// ----------------------------------------------------------------------------------
 	MMethod activate = bean.addMethod("activate", void.class);
 	activate.setFinal(true);
@@ -76,7 +76,7 @@ class MainExamples {
 	    name.addGetterMethod().setFinal(true).overrides();
 	    cls.addFinalFieldsConstructor();
 	    MField field = cls.addField(classes.get(i), "bean");
-	    field.addAccessorMethods();
+	    field.addAccessorMethods().getter().overrides();
 	    i = i - 1;
 	}
 	// ----------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ class MainExamples {
     @Test
     void test03() throws Exception {
 	// ----------------------------------------------------------------------------------
-	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(true);
+	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(false);
 	MBundle.GENERATE_READONLY.set(false);
 	// ----------------------------------------------------------------------------------
 	MBundle bundle = new MBundle(new File("src-generated"));
@@ -119,11 +119,11 @@ class MainExamples {
 	MBundle bundle = new MBundle(new File("src-generated"));
 	MPackage pckg = bundle.newPackage("com.cc.jcg.main");
 	// ----------------------------------------------------------------------------------
-	MEnum enm = pckg.newEnum("State");
+	MEnum enm = pckg.newEnum("TaskState");
 	enm.addValue("READY");
 	enm.addValue("RUNNING");
 	enm.addValue("FAILED");
-	enm.addValue("SECCEED");
+	enm.addValue("SUCCEEDED");
 	MClass dis1 = enm.newDispatcher();
 	// ----------------------------------------------------------------------------------
 	MClass dis2 = pckg.newEnumDispatcher(MClassModifier.class, "ClassModifierDispatcher");
