@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import com.cc.jcg.MBundle;
 import com.cc.jcg.MClass;
+import com.cc.jcg.MClass.MClassModifier;
 import com.cc.jcg.MEnum;
 import com.cc.jcg.MEnumDispatcher;
 import com.cc.jcg.MField;
@@ -18,12 +19,11 @@ import com.cc.jcg.MInterface;
 import com.cc.jcg.MMethod;
 import com.cc.jcg.MPackage;
 import com.cc.jcg.MParameter;
-import com.cc.jcg.MClass.MClassModifier;
 
-class MainExamples {
+public class MainExamples {
 
     @Test
-    void test01() throws Exception {
+    public void test01() throws Exception {
 	// ----------------------------------------------------------------------------------
 	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(true);
 	MBundle.GENERATE_READONLY.set(false);
@@ -60,7 +60,7 @@ class MainExamples {
     }
 
     @Test
-    void test02() throws Exception {
+    public void test02() throws Exception {
 	// ----------------------------------------------------------------------------------
 	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(true);
 	MBundle.GENERATE_READONLY.set(false);
@@ -95,7 +95,7 @@ class MainExamples {
     }
 
     @Test
-    void test03() throws Exception {
+    public void test03() throws Exception {
 	// ----------------------------------------------------------------------------------
 	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(false);
 	MBundle.GENERATE_READONLY.set(false);
@@ -120,7 +120,7 @@ class MainExamples {
     }
 
     @Test
-    void test04() throws Exception {
+    public void test04() throws Exception {
 	// ----------------------------------------------------------------------------------
 	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(true);
 	MBundle.GENERATE_READONLY.set(false);
