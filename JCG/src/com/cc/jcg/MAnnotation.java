@@ -298,15 +298,10 @@ public class MAnnotation
 
     @Override
     public final synchronized MCodeBlock getCodeBlock(MAnnotation element) {
-	// import java.lang.annotation.ElementType;
-	// import java.lang.annotation.Retention;
-	// import java.lang.annotation.RetentionPolicy;
-	// import java.lang.annotation.Target;
 	addExtraImport(java.lang.annotation.ElementType.class);
 	addExtraImport(java.lang.annotation.Retention.class);
 	addExtraImport(java.lang.annotation.RetentionPolicy.class);
 	addExtraImport(java.lang.annotation.Target.class);
-	//
 	new MGuessOverrides(this).call();
 	StringBuffer before = new StringBuffer();
 	before.append("package " + pckg.getName() + ";");

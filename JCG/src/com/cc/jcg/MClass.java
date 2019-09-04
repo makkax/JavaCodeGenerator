@@ -860,10 +860,9 @@ public class MClass
 	return sb.length() == 0 || sb.charAt(sb.length() - 1) == '\n' ? "" : " ";
     }
 
-    @SuppressWarnings("null")
     @Override
     public synchronized MCodeBlock getCodeBlock(MClass element) {
-	new MGuessOverrides(this).call();// TODO: is not perfect...
+	new MGuessOverrides(this).call();
 	for (final MMethod method : methods) {
 	    if (isFinal) {
 		method.setFinal(false);

@@ -62,6 +62,7 @@ class MainExamples {
 	// ----------------------------------------------------------------------------------
 	MInterface intf = pckg.newInterface("NamedBean");
 	intf.addMethod("getName", String.class);
+	intf.addMethod("getBean", intf);
 	// ----------------------------------------------------------------------------------
 	List<MClass> classes = new ArrayList<>();
 	for (int i = 0; i < 10; i++) {
@@ -69,13 +70,14 @@ class MainExamples {
 	    cls.addInterface(intf);
 	    classes.add(cls);
 	}
+	int i = 9;
 	for (MClass cls : classes) {
 	    MField name = cls.addField(String.class, "name").setFinal(true);
 	    name.addGetterMethod().setFinal(true).overrides();
 	    cls.addFinalFieldsConstructor();
-	    int rand = Double.valueOf(10 * Math.random()).intValue();
-	    MField field = cls.addField(classes.get(rand), "bean");
+	    MField field = cls.addField(classes.get(i), "bean");
 	    field.addAccessorMethods();
+	    i = i - 1;
 	}
 	// ----------------------------------------------------------------------------------
 	boolean clean = false;
