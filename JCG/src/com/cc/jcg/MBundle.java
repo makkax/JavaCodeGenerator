@@ -22,6 +22,7 @@ public class MBundle
 
     public static final AtomicBoolean EXCLUDE_GENERATED_ANNOTATION = new AtomicBoolean(true);
     public static final AtomicBoolean GENERATE_READONLY = MPackage.GENERATE_READONLY;
+    public static final AtomicBoolean DO_NOT_GENERATE_EMPTY_PACKAGES = new AtomicBoolean(false);
     private boolean showProgressbar = false;
     private final File srcDir;
     private final File templatesSrcDir;
@@ -32,8 +33,7 @@ public class MBundle
     private MGeneratedCodeListener generatedCodeListener;
     private boolean ensureCollectionGenerics;
     private boolean ensureMapGenerics;
-    public static boolean DO_NOT_GENERATE_EMPTY_PACKAGES = false;
-    private boolean doNotGenerateEmptyPackages = DO_NOT_GENERATE_EMPTY_PACKAGES;
+    private boolean doNotGenerateEmptyPackages = DO_NOT_GENERATE_EMPTY_PACKAGES.get();
 
     public MBundle(String dirPath, String name) throws Exception {
 	this(new File(dirPath), new File(dirPath), name);
