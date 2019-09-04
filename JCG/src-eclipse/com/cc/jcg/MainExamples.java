@@ -105,4 +105,26 @@ class MainExamples {
 	bundle.generateCode(clean);
 	// ----------------------------------------------------------------------------------
     }
+
+    @Test
+    void test04() throws Exception {
+	// ----------------------------------------------------------------------------------
+	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(true);
+	MBundle.GENERATE_READONLY.set(false);
+	// ----------------------------------------------------------------------------------
+	MBundle bundle = new MBundle(new File("src-generated"));
+	MPackage pckg = bundle.newPackage("com.cc.jcg.main");
+	// ----------------------------------------------------------------------------------
+	MEnum enm = pckg.newEnum("State");
+	enm.addValue("READY");
+	enm.addValue("RUNNING");
+	enm.addValue("FAILED");
+	enm.addValue("SECCEED");
+	// ----------------------------------------------------------------------------------
+	enm.newDispatcher();
+	// ----------------------------------------------------------------------------------
+	boolean clean = false;
+	bundle.generateCode(clean);
+	// ----------------------------------------------------------------------------------
+    }
 }
