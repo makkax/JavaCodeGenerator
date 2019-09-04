@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
@@ -24,20 +25,22 @@ public class MainExamples {
 
     @Test
     public void test01() throws Exception {
-	// ----------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
 	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(true);
 	MBundle.GENERATE_READONLY.set(false);
-	// ----------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
 	MBundle bundle = new MBundle(new File("src-generated"));
 	MPackage pckg = bundle.newPackage("com.cc.jcg.main");
-	// ----------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
 	Collection<MParameter> parameters = new ArrayList<>();
 	parameters.add(new MParameter(String.class, "name"));
 	parameters.add(new MParameter(String.class, "email"));
 	parameters.add(new MParameter(LocalDate.class, "birthday"));
 	parameters.add(new MParameter(boolean.class, "active"));
+	parameters.add(new MParameter(List.class, String.class, "tags"));// List<String> tags
+	parameters.add(new MParameter(Map.class, "<String, User>", "friends"));// Map<String, User> tags
 	MClass bean = pckg.newBean("User", parameters);
-	// ----------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
 	MMethod activate = bean.addMethod("activate", void.class);
 	activate.setFinal(true);
 	activate.setSynchronized(true);
@@ -45,7 +48,7 @@ public class MainExamples {
 	code.append("active = true;\n");
 	code.append("// TODO: sendActivationEmail(email);");
 	activate.setBlockContent(code);
-	// ----------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
 	MMethod deactivate = bean.addMethod("deactivate", void.class);
 	deactivate.setFinal(true);
 	deactivate.setSynchronized(true);
@@ -53,10 +56,10 @@ public class MainExamples {
 	    block.addLine("active = false;");
 	    block.addLine("// TODO: sendDeactivationEmail(email);");
 	});
-	// ----------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
 	boolean clean = false;
 	bundle.generateCode(clean);
-	// ----------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------
     }
 
     @Test

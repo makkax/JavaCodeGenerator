@@ -1,6 +1,8 @@
 package com.cc.jcg.main;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 public class User {
     
@@ -8,6 +10,8 @@ public class User {
     private String email;
     private LocalDate birthday;
     private boolean active;
+    private List<String> tags;
+    private Map<String, User> friends;
     
     public User() {
         super();
@@ -43,6 +47,22 @@ public class User {
     
     public final synchronized void setActive(boolean active) {
         this.active = active;
+    }
+    
+    public final synchronized List<String> getTags() {
+        return tags;
+    }
+    
+    public final synchronized void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+    
+    public final synchronized Map<String, User> getFriends() {
+        return friends;
+    }
+    
+    public final synchronized void setFriends(Map<String, User> friends) {
+        this.friends = friends;
     }
     
     public final synchronized void activate() {
