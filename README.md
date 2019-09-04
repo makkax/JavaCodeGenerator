@@ -15,6 +15,10 @@ parameters.add(new MParameter(String.class, "name"));
 parameters.add(new MParameter(String.class, "email"));
 parameters.add(new MParameter(LocalDate.class, "birthday"));
 parameters.add(new MParameter(boolean.class, "active"));
+// List<String> tags
+parameters.add(new MParameter(List.class, String.class, "tags"));
+// Map<String, User> tags
+parameters.add(new MParameter(Map.class, "<String, User>", "friends"));
 MClass bean = pckg.newBean("User", parameters);
 // ----------------------------------------------------------------------------------
 MMethod activate = bean.addMethod("activate", void.class);
@@ -86,6 +90,22 @@ public class User {
     
     public final synchronized void setActive(boolean active) {
         this.active = active;
+    }
+    
+    public final synchronized List<String> getTags() {
+        return tags;
+    }
+    
+    public final synchronized void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+    
+    public final synchronized Map<String, User> getFriends() {
+        return friends;
+    }
+    
+    public final synchronized void setFriends(Map<String, User> friends) {
+        this.friends = friends;
     }
     
     public final synchronized void activate() {
