@@ -42,7 +42,22 @@ public class MFunctions {
     }
 
     public static Class<?> toNotPrimitiveType(Class<?> type) {
-	if (boolean.class.equals(type)) {
+	if (int.class.isAssignableFrom(type)) {
+	    return Integer.class;
+	}
+	if (long.class.isAssignableFrom(type)) {
+	    return Long.class;
+	}
+	if (double.class.isAssignableFrom(type)) {
+	    return Double.class;
+	}
+	if (float.class.isAssignableFrom(type)) {
+	    return Float.class;
+	}
+	if (short.class.isAssignableFrom(type)) {
+	    return Short.class;
+	}
+	if (boolean.class.isAssignableFrom(type)) {
 	    return Boolean.class;
 	}
 	return type;

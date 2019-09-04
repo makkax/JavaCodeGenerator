@@ -180,6 +180,39 @@ public class MBundle
 	return null;
     }
 
+    public final MInterface getInterfaceByName(String name) {
+	for (MPackage pckg : packages) {
+	    for (MInterface e : pckg.getInterfaces()) {
+		if (e.getName().equals(name)) {
+		    return e;
+		}
+	    }
+	}
+	return null;
+    }
+
+    public final MClass getClassByName(String name) {
+	for (MPackage pckg : packages) {
+	    for (MClass e : pckg.getClasses()) {
+		if (e.getName().equals(name)) {
+		    return e;
+		}
+	    }
+	}
+	return null;
+    }
+
+    public final MEnum getEnumByName(String name) {
+	for (MPackage pckg : packages) {
+	    for (MEnum e : pckg.getEnums()) {
+		if (e.getName().equals(name)) {
+		    return e;
+		}
+	    }
+	}
+	return null;
+    }
+
     public final void addSubBundle(MBundle bundle) {
 	bundles.add(bundle);
     }
