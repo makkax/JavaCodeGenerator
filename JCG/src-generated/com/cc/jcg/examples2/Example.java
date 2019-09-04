@@ -1,11 +1,9 @@
 package com.cc.jcg.examples2;
 
-import com.cc.jcg.MGenerated;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-@MGenerated
 public class Example<T extends Serializable> {
     
     private final String name;

@@ -1,4 +1,4 @@
-package com.cc.jcg.examples;
+package com.cc.jcg.examples2;
 
 public final class SomeClass {
     
