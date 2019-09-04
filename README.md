@@ -27,8 +27,15 @@ The quickest way to start using JCG is to include the following Maven dependency
 
 ## Highlights
 
-All you need to do to start generating Java code is to create a `MBundle` with `MBundle bundle = new MBundle(new File("src-generated"));
-` and start adding packages, interfaces, classes and so on; once you are ready, you tell your `bundle` to generate the code with `bundle.generateCode(clean);`.
+All you need to do to start generating Java code is to create a `MBundle` and some `MPackage` with 
+```java
+MBundle bundle = new MBundle(new File("src-generated"));
+MPackage pckg = bundle.newPackage("com.jcg.gen");
+```
+and start adding interfaces, classes, fields, methods; once you are ready, you tell your `bundle` to generate the code with
+```java
+bundle.generateCode(clean);
+```
 
 * **imports** are automatically handled or can be manually added with the method `addImport`
 * the generated code is automatically **indented**
