@@ -4,7 +4,7 @@ public class Bean02
         implements NamedBean {
     
     private final String name;
-    private Bean06 bean06;
+    private Bean01 bean;
     
     public Bean02(String name) {
         super();
@@ -16,11 +16,11 @@ public class Bean02
         return name;
     }
     
-    public final synchronized Bean06 getBean06() {
-        return bean06;
+    public final synchronized Bean01 getBean() {
+        return bean;
     }
     
-    public final synchronized void setBean06(Bean06 bean06) {
-        this.bean06 = bean06;
+    public final synchronized void setBean(Bean01 bean) {
+        this.bean = bean;
     }
 }
