@@ -126,7 +126,7 @@ Each Java generated element is represented by a class that can be directly acces
 
 ## More Examples
 
-All examples listed here are included in the `src-eclipse` project directory.
+All examples listed here are included in the `src-eclipse` project directory (class `MainExamples`).
 
 Here is another example where 10 classes implementing an interface `Named` (also generated) are created and each one contains a field referencing another `Named` type:
 
@@ -233,7 +233,7 @@ public interface Supplier<T> {
 }
 ```
 
-The following example generates a new Enumeration `TaskState` with a corresponding --dispatcher-- class and another dispatcher for an already existing Enumeration `MClassModifier`:
+The following example generates a new Enumeration `TaskState` with a corresponding `TaskStateDispatcher` class and another dispatcher for an already existing Enumeration `MClassModifier`:
 
 ```java
 // ----------------------------------------------------------------------------------
