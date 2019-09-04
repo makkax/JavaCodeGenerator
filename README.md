@@ -218,7 +218,7 @@ bundle.generateCode(clean);
 
 The generated interface will be annotatd with `@MGenerated`; this annotation can be omitted by using the static flag
 
-`MBundle.EXCLUDE_GENERATED_ANNOTATION.set(false);` (default value is `false`)
+`MBundle.EXCLUDE_GENERATED_ANNOTATION.set(true);` (default value is `true`)
 
 ```java
 package com.cc.jcg.main;
