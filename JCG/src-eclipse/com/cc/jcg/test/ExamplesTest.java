@@ -2,16 +2,12 @@ package com.cc.jcg.test;
 
 import java.io.File;
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.RetentionPolicy;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -29,7 +25,7 @@ import com.cc.jcg.MPackage;
 import com.cc.jcg.MParameter;
 import com.cc.jcg.MType;
 
-@Table
+// @Table
 public class ExamplesTest {
 
     @AfterClass
@@ -48,33 +44,33 @@ public class ExamplesTest {
 	// Annotations
 	pckg.newAnnotation("Simple", ElementType.FIELD, RetentionPolicy.SOURCE);
 	// 1b
-	cls.addAnnotation(new Table() {
-
-	    @Override
-	    public Class<? extends Annotation> annotationType() {
-		return Table.class;
-	    }
-
-	    @Override
-	    public String catalog() {
-		return "Catalog";
-	    }
-
-	    @Override
-	    public String name() {
-		return "Name";
-	    }
-
-	    @Override
-	    public String schema() {
-		return null;
-	    }
-
-	    @Override
-	    public UniqueConstraint[] uniqueConstraints() {
-		return null;
-	    }
-	});
+	// cls.addAnnotation(new Table() {
+	//
+	// @Override
+	// public Class<? extends Annotation> annotationType() {
+	// return Table.class;
+	// }
+	//
+	// @Override
+	// public String catalog() {
+	// return "Catalog";
+	// }
+	//
+	// @Override
+	// public String name() {
+	// return "Name";
+	// }
+	//
+	// @Override
+	// public String schema() {
+	// return null;
+	// }
+	//
+	// @Override
+	// public UniqueConstraint[] uniqueConstraints() {
+	// return null;
+	// }
+	// });
 	// 2
 	final MField fld = cls.addField(String.class, "name").makePrivateFinal();
 	cls.addFinalFieldsConstructor().makeProtected();
