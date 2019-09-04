@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import com.cc.jcg.MClass.MClassModifier;
+
 class MainExamples {
 
     @Test
@@ -120,8 +122,10 @@ class MainExamples {
 	enm.addValue("RUNNING");
 	enm.addValue("FAILED");
 	enm.addValue("SECCEED");
+	MClass dis1 = enm.newDispatcher();
 	// ----------------------------------------------------------------------------------
-	enm.newDispatcher();
+	MClass dis2 = pckg.newEnumDispatcher(MClassModifier.class, "ClassModifierDispatcher");
+	dis2.addInterface(MEnumDispatcher.class, "<MClassModifier, R>");
 	// ----------------------------------------------------------------------------------
 	boolean clean = false;
 	bundle.generateCode(clean);
