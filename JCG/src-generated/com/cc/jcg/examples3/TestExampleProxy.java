@@ -13,12 +13,12 @@ public class TestExampleProxy
     }
     
     @Override
-    public double getSomeValue() {
-        return object.getSomeValue();
+    public void doSomething(String arg0) {
+        object.doSomething(arg0);
     }
     
     @Override
-    public void doSomething(String arg0) {
-        object.doSomething(arg0);
+    public double getSomeValue() {
+        return object.getSomeValue();
     }
 }
