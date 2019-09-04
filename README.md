@@ -232,3 +232,97 @@ public interface Supplier<T> {
     T get();
 }
 ```
+
+The following example generates a new Enumeration `TaskState` with a corresponding --dispatcher-- class and another dispatcher for an already existing Enumeration `MClassModifier`:
+
+```java
+// ----------------------------------------------------------------------------------
+MBundle bundle = new MBundle(new File("src-generated"));
+MPackage pckg = bundle.newPackage("com.cc.jcg.main");
+// ----------------------------------------------------------------------------------
+MEnum enm = pckg.newEnum("State");
+enm.addValue("READY");
+enm.addValue("RUNNING");
+enm.addValue("FAILED");
+enm.addValue("SUCCEEDED");
+MClass dis1 = enm.newDispatcher();
+// ----------------------------------------------------------------------------------
+MClass dis2 = pckg.newEnumDispatcher(MClassModifier.class, "ClassModifierDispatcher");
+dis2.addInterface(MEnumDispatcher.class, "<MClassModifier, R>");
+// ----------------------------------------------------------------------------------
+boolean clean = false;
+bundle.generateCode(clean);
+```
+
+TaskState.java:
+```java
+package com.cc.jcg.main;
+
+public enum TaskState {
+    READY,
+    RUNNING,
+    FAILED,
+    SUCCEEDED;
+    
+}
+```
+
+TaskStateDispatcher.java:
+```java
+package com.cc.jcg.main;
+
+public abstract class TaskStateDispatcher<R> {
+    
+    public final R dispatch(TaskState value) {
+        switch (value) {
+            case READY:
+                return READY();
+            case RUNNING:
+                return RUNNING();
+            case FAILED:
+                return FAILED();
+            case SUCCEEDED:
+                return SUCCEEDED();
+        }
+        throw new RuntimeException("unexpected value " + value);
+    }
+    
+    protected abstract R READY();
+    
+    protected abstract R RUNNING();
+    
+    protected abstract R FAILED();
+    
+    protected abstract R SUCCEEDED();
+}
+```
+
+ClassModifierDispatcher.java:
+```java
+package com.cc.jcg.main;
+
+import com.cc.jcg.MClass.MClassModifier;
+import com.cc.jcg.MEnumDispatcher;
+
+public abstract class ClassModifierDispatcher<R>
+        implements MEnumDispatcher<MClassModifier, R> {
+    
+    public final R dispatch(MClassModifier value) {
+        switch (value) {
+            case PUBLIC:
+                return PUBLIC();
+            case PRIVATE:
+                return PRIVATE();
+            case DEFAULT:
+                return DEFAULT();
+        }
+        throw new RuntimeException("unexpected value " + value);
+    }
+    
+    protected abstract R PUBLIC();
+    
+    protected abstract R PRIVATE();
+    
+    protected abstract R DEFAULT();
+}
+```
