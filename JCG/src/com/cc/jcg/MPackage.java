@@ -22,8 +22,6 @@ import com.cc.jcg.MMethod.MMethodModifier;
 import com.cc.jcg.tools.EncodedFileReader;
 import com.cc.jcg.tools.EncodedFileWriter;
 import com.cc.jcg.tools.ResourcesAsStream;
-import com.cc.jcg.xml.MParserGenerator;
-import com.cc.jcg.xml.XmlDocument;
 
 public class MPackage
 	extends MFunctions
@@ -381,10 +379,6 @@ public class MPackage
 	    type.addMethod(value.name(), "R").setAbstract(true).setModifier(MMethodModifier.PROTECTED);
 	}
 	return type;
-    }
-
-    public Set<MClass> newXmlParser(XmlDocument document) throws ClassNotFoundException {
-	return new MParserGenerator(this).getMClasses(document);
     }
 
     @Override
