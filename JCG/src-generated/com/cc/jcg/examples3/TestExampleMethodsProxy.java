@@ -1,12 +1,10 @@
 package com.cc.jcg.examples3;
 
-import com.cc.jcg.MGenerated;
 import com.cc.jcg.proxy.Example;
 import com.cc.jcg.proxy.PM;
 import com.cc.jcg.proxy.Proxy;
 import com.cc.jcg.proxy.ProxyMethod;
 
-@MGenerated
 public class TestExampleMethodsProxy
         implements Example {
     

@@ -1,9 +1,7 @@
 package com.cc.jcg.examples3;
 
-import com.cc.jcg.MGenerated;
 import com.cc.jcg.proxy.Example;
 
-@MGenerated
 public class TestExampleProxy
         implements Example {
     
