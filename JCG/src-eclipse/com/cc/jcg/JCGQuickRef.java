@@ -1,4 +1,4 @@
-package com.cc.jcg.test;
+package com.cc.jcg;
 
 import java.io.File;
 
@@ -98,29 +98,29 @@ public class JCGQuickRef {
 	// -------------------------------------------------------------------------------------------------
 	pckg.setFailOnRepeatedDefinitions(true);// default true
 	// -------------------------------------------------------------------------------------------------
-	// 	pckg.newAnnotation(name, annType, annRetention);
-	// 	pckg.newAnnotationRuntime(name, annType);
-	// 	pckg.newAnnotationSource(name, annType);
+	// pckg.newAnnotation(name, annType, annRetention);
+	// pckg.newAnnotationRuntime(name, annType);
+	// pckg.newAnnotationSource(name, annType);
 	// -------------------------------------------------------------------------------------------------
-	//	pckg.newBean(String name, MParameter... fields);
-	//	pckg.newBean(String name, Collection<MParameter> fields);
+	// pckg.newBean(String name, MParameter... fields);
+	// pckg.newBean(String name, Collection<MParameter> fields);
 	// -------------------------------------------------------------------------------------------------
-	//	pckg.newClass(name);
-	//	pckg.newClass(intf, name);
-	//	pckg.newSubclass(supertype, name);
+	// pckg.newClass(name);
+	// pckg.newClass(intf, name);
+	// pckg.newSubclass(supertype, name);
 	// -------------------------------------------------------------------------------------------------
-	//	pckg.newDelegatorClass(MType wrapped);
-	//	pckg.newWrapperClass(wrapped, delegatePublicMethods);
-	//	pckg.newWrapperClass(name, wrapped, delegatePublicMethods);
+	// pckg.newDelegatorClass(MType wrapped);
+	// pckg.newWrapperClass(wrapped, delegatePublicMethods);
+	// pckg.newWrapperClass(name, wrapped, delegatePublicMethods);
 	// -------------------------------------------------------------------------------------------------
-	//	pckg.newEnum(name);
-	//	pckg.newEnumDispatcher(eType, name);
+	// pckg.newEnum(name);
+	// pckg.newEnumDispatcher(eType, name);
 	// -------------------------------------------------------------------------------------------------
-	//	pckg.newTypeSafeEnum(name, values);
-	//	pckg.newTypeSafeEnum(name, mEum);
+	// pckg.newTypeSafeEnum(name, values);
+	// pckg.newTypeSafeEnum(name, mEum);
 	// -------------------------------------------------------------------------------------------------
-	//	pckg.newInterface(name);
-	//	pckg.newInterface(supertype, name);
+	// pckg.newInterface(name);
+	// pckg.newInterface(supertype, name);
 	// -------------------------------------------------------------------------------------------------
     }
 }
