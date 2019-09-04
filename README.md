@@ -12,7 +12,7 @@ The quickest way to start using JCG is to include the following Maven dependency
 <repositories>
     <repository>
         <id>github-jcg-mvn-repo</id>
-        <url>https://github.com/alecbigger/JavaCodeGenerator/tree/mvn-repo</url>
+        <url>https://github.com/makkax/JavaCodeGenerator/tree/mvn-repo</url>
     </repository>
 </repositories>
 
