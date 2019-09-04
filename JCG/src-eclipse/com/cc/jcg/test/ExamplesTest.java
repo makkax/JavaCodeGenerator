@@ -81,7 +81,7 @@ public class ExamplesTest {
 	final MMethod m3 = cls.addMethod("getSimpleMethod3", void.class, new MParameter(enm, "enumParameter"));
 	final MMethod m4 = cls.addMethod("getSimpleMethod4", scls, new MParameter(enm, "enumParameter")).returnNull();
 	// JavaFile
-	pckg.addJavaFiles(new File("src-generated/com/cc/jcg/examples3"));
+	pckg.addJavaFiles(new File("src-generated/com/cc/jcg/examples"));
 	final MType javaFile = pckg.addJavaFile(new File("src-eclipse/com/cc/jcg/test/types/HashAndEquals.java"), "EqualsAndHash");
 	pckg.addJavaFile(new File("src-eclipse/com/cc/jcg/test/types/RefType.java"), "Santorini");
 	final MMethod m5 = cls.addMethod("getJavaFile", javaFile, new MParameter(javaFile, "file")).returnNull();

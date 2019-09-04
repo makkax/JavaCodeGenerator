@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import com.cc.jcg.MClass.MClassModifier;
 import com.cc.jcg.MConstructor.MConstructorModifier;
 import com.cc.jcg.MMethod.MMethodModifier;
+import com.cc.jcg.tools.BufferedCopy;
 import com.cc.jcg.tools.EncodedFileReader;
 import com.cc.jcg.tools.EncodedFileWriter;
 import com.cc.jcg.tools.ResourcesAsStream;

@@ -1,9 +1,7 @@
 package com.cc.jcg.examples2;
 
-import com.cc.jcg.MGenerated;
 import com.cc.jcg.MTemplate;
 
-@MGenerated
 @MTemplate
 public final class SpecialEnum {
     
