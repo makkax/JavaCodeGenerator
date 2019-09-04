@@ -1,4 +1,4 @@
-package com.cc.jcg.tools;
+package com.cc.jcg.tools.xml;
 
 import java.io.File;
 import java.io.FileInputStream;
