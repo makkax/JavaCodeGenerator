@@ -27,6 +27,9 @@ The quickest way to start using JCG is to include the following Maven dependency
 
 ## Highlights
 
+All you need to do to start generating Java code is to create a `MBundle` with `MBundle bundle = new MBundle(new File("src-generated"));
+` and start adding packages, interfaces, classes and so on; once you are ready, you tell your `bundle` to generate the code with `bundle.generateCode(clean);`.
+
 * **imports** are automatically handled or can be manually added with the method `addImport`
 * the generated code is automatically **indented**
 * generated types can be **referenced** in other Java elements (see `MTypeRef<REF>`)
@@ -53,6 +56,8 @@ Each Java generated element is represented by a class that can be directly acces
 ## Examples
 
 All examples listed here are included in the `src-eclipse` project directory (class `MainExamples`).
+
+### Example 1 - `MPackage.newBean()`
 
 The following example shows some basic usage of JCG and creates a Java bean `User`:
 
@@ -171,6 +176,8 @@ public class User {
 }
 ```
 
+### Example 2 - `MInterface`, `MClass`, `MConstructor`, `MField`, `MMethod`
+
 Here is another example where 10 classes implementing an interface `Named` (also generated) are created and each one contains a field referencing another `Named` type:
 
 ```java
@@ -236,6 +243,8 @@ public class Bean05
 }
 ```
 
+### Example 3 - `MAnnotation`, Java Generics
+
 The following code will generate a `FunctionalInterface`, using also a Generic type `T`:
 
 ```java
@@ -275,6 +284,8 @@ public interface Supplier<T> {
     T get();
 }
 ```
+
+### Example 4 - `MEnum`, `MEnumDispatcher`
 
 The following example generates a new Enumeration `TaskState` with a corresponding `TaskStateDispatcher` class and another dispatcher for an already existing Enumeration `MClassModifier`:
 
