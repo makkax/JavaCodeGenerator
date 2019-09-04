@@ -7,20 +7,6 @@
 	<version>1.0</version>
 	<name>JavaCodeGenerator</name>
 
-	<repositories>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</pluginRepository>
-	</pluginRepositories>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -45,11 +31,6 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.github.AlecBigger</groupId>
-				<artifactId>jcg</artifactId>
-				<version>1.0</version>
 			</plugin>
 		</plugins>
 	</build>
