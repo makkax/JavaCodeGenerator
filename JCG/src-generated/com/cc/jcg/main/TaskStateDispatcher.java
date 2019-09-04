@@ -1,8 +1,8 @@
 package com.cc.jcg.main;
 
-public abstract class StateDispatcher<R> {
+public abstract class TaskStateDispatcher<R> {
     
-    public final R dispatch(State value) {
+    public final R dispatch(TaskState value) {
         switch (value) {
             case READY:
                 return READY();
@@ -10,8 +10,8 @@ public abstract class StateDispatcher<R> {
                 return RUNNING();
             case FAILED:
                 return FAILED();
-            case SECCEED:
-                return SECCEED();
+            case SUCCEEDED:
+                return SUCCEEDED();
         }
         throw new RuntimeException("unexpected value " + value);
     }
@@ -22,5 +22,5 @@ public abstract class StateDispatcher<R> {
     
     protected abstract R FAILED();
     
-    protected abstract R SECCEED();
+    protected abstract R SUCCEEDED();
 }

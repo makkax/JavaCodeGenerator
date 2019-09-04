@@ -1,9 +1,9 @@
 package com.cc.jcg.main;
 
-public enum State {
+public enum TaskState {
     READY,
     RUNNING,
     FAILED,
-    SECCEED;
+    SUCCEEDED;
     
 }

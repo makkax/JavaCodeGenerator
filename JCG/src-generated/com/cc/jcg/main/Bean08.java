@@ -16,6 +16,7 @@ public class Bean08
         return name;
     }
     
+    @Override
     public final synchronized Bean01 getBean() {
         return bean;
     }
