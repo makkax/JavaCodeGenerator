@@ -1,4 +1,4 @@
-package com.cc.jcg;
+package com.cc.jcg.test;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -9,6 +9,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import com.cc.jcg.MBundle;
+import com.cc.jcg.MClass;
+import com.cc.jcg.MEnum;
+import com.cc.jcg.MEnumDispatcher;
+import com.cc.jcg.MField;
+import com.cc.jcg.MInterface;
+import com.cc.jcg.MMethod;
+import com.cc.jcg.MPackage;
+import com.cc.jcg.MParameter;
 import com.cc.jcg.MClass.MClassModifier;
 
 class MainExamples {
