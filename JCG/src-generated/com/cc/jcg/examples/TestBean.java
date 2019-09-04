@@ -1,5 +1,8 @@
 package com.cc.jcg.examples;
 
+import com.cc.jcg.MGenerated;
+
+@MGenerated
 public class TestBean {
     
     private String string;

@@ -1,10 +1,12 @@
 package com.cc.jcg.examples2;
 
+import com.cc.jcg.MGenerated;
 import com.cc.jcg.proxy.Example;
 import com.cc.jcg.proxy.PM;
 import com.cc.jcg.proxy.Proxy;
 import com.cc.jcg.proxy.ProxyMethod;
 
+@MGenerated
 public class TestExampleMethodsProxy
         implements Example {
     
@@ -19,24 +21,24 @@ public class TestExampleMethodsProxy
     
     @Override
     @PM(value = 1)
-    public double getSomeValue() {
+    public void doSomething(String arg0) {
         ProxyMethod method = new ProxyMethod(TestExampleMethodsProxy.class, 1);
+        // parameters
+        method.getParameter("arg0").setValue(arg0);
+        // no return value
+        object.doSomething(arg0);
+        proxy.onMethod(object, method);
+    }
+    
+    @Override
+    @PM(value = 2)
+    public double getSomeValue() {
+        ProxyMethod method = new ProxyMethod(TestExampleMethodsProxy.class, 2);
         // no parameters
         // return value
         double value = object.getSomeValue();
         method.setValue(value);
         proxy.onMethod(object, method);
         return value;
-    }
-    
-    @Override
-    @PM(value = 2)
-    public void doSomething(String arg0) {
-        ProxyMethod method = new ProxyMethod(TestExampleMethodsProxy.class, 2);
-        // parameters
-        method.getParameter("arg0").setValue(arg0);
-        // no return value
-        object.doSomething(arg0);
-        proxy.onMethod(object, method);
     }
 }

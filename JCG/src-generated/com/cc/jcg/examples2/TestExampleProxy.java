@@ -1,7 +1,9 @@
 package com.cc.jcg.examples2;
 
+import com.cc.jcg.MGenerated;
 import com.cc.jcg.proxy.Example;
 
+@MGenerated
 public class TestExampleProxy
         implements Example {
     
@@ -13,12 +15,12 @@ public class TestExampleProxy
     }
     
     @Override
-    public double getSomeValue() {
-        return object.getSomeValue();
+    public void doSomething(String arg0) {
+        object.doSomething(arg0);
     }
     
     @Override
-    public void doSomething(String arg0) {
-        object.doSomething(arg0);
+    public double getSomeValue() {
+        return object.getSomeValue();
     }
 }
