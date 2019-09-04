@@ -1,9 +1,60 @@
 # JavaCodeGenerator
 
 JCG is a powerful Java code generator. 
-Unlike most generators, JCG is not based on templates; its a **DSL in pure Java**!
+Unlike most generators, JCG is not based on templates; its a **DSL in pure Java** to generate Java!
+The goal of JCG is not to cover all Java language features, but it's to allow the creation of powerful, robust and well designed generators.
 
-A simple example can show what that means:
+## Installation
+
+The quickest way to start using JCG is to include the following Maven dependency into your pom.xml file:
+
+```maven
+<repositories>
+    <repository>
+        <id>github-jcg-mvn-repo</id>
+        <url>https://github.com/alecbigger/JavaCodeGenerator/tree/mvn-repo</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>cc</groupId>
+        <artifactId>jcg</artifactId>
+        <version>1.0</version>
+    </dependency>
+</dependencies>
+```
+
+## Highlights
+
+* **imports** are automatically handled or can be manually added with the method `addImport`
+* the generated code is automatically **indented**
+* generated types can be **referenced** in other Java elements (see `MTypeRef<REF>`)
+* **Generics** can be added to classes, interfaces and methods
+* **Annotations** can be added to classes, interfaces, fields and methods
+* a basic **Exceptions handling** is configurable for methods
+
+Each Java generated element is represented by a class that can be directly accessed to create the needed code:
+
+| type            | related type                                                                       
+|:--------------- |:-------------------------------------------------------------------------
+| `MBundle`       |  `MPackage`
+| `MPackage`      |  `MType`: `MClass`, `MInterface`, `MEnum`
+| `MInterface`    |  `MMethod`
+| `MClass`        |  `MField`, `MMethod`, `MConstructor`, `MInnerInterface`, `MInnerClass`, `MInnerEnum`
+| `MEnum`         |  `MEnumValue`, `MField`, `MMethod`, `MConstructor` 
+| `MAnnotation`   |  `MType`, `MField`, `MMethod`
+| `MTypeRef<REF>` |  `MTypeRefGeneric` = `MTypeRef<String>`
+|                 |  `MTypeRefJava`    = `MTypeRef<Class<?>>`
+|                 |  `MTypeRefModel`   = `MTypeRef<MType>`
+
+[show JCG model](https://github.com/alecbigger/JavaCodeGenerator/blob/master/JCG/CodeGeneratorDSL.png)
+
+## Examples
+
+All examples listed here are included in the `src-eclipse` project directory (class `MainExamples`).
+
+The following example shows some basic usage of JCG and creates a Java bean `User`:
 
 ```java
 // ----------------------------------------------------------------------------------
@@ -119,34 +170,6 @@ public class User {
     }
 }
 ```
-Other highights:
-
-* **imports** are automatically handled or can be manually added with the method `addImport`
-* the generated code is automatically **indented**
-* generated types can be **referenced** in other Java elements (see `MTypeRef<REF>`)
-* **Generics** can be added to classes, interfaces and methods
-* **Annotations** can be added to classes, interfaces, fields and methods
-* a basic **Exceptions handling** is configurable for methods
-
-Each Java generated element is represented by a class that can be directly accessed to create the needed code:
-
-| type            | related type                                                                       
-|:--------------- |:-------------------------------------------------------------------------
-| `MBundle`       |  `MPackage`
-| `MPackage`      |  `MType`: `MClass`, `MInterface`, `MEnum`
-| `MInterface`    |  `MMethod`
-| `MClass`        |  `MField`, `MMethod`, `MConstructor`, `MInnerInterface`, `MInnerClass`, `MInnerEnum`
-| `MEnum`         |  `MEnumValue`, `MField`, `MMethod`, `MConstructor` 
-| `MAnnotation`   |  `MType`, `MField`, `MMethod`
-| `MTypeRef<REF>` |  `MTypeRefGeneric` = `MTypeRef<String>`
-|                 |  `MTypeRefJava`    = `MTypeRef<Class<?>>`
-|                 |  `MTypeRefModel`   = `MTypeRef<MType>`
-
-[show JCG model](https://github.com/alecbigger/JavaCodeGenerator/blob/master/JCG/CodeGeneratorDSL.png)
-
-## More Examples
-
-All examples listed here are included in the `src-eclipse` project directory (class `MainExamples`).
 
 Here is another example where 10 classes implementing an interface `Named` (also generated) are created and each one contains a field referencing another `Named` type:
 
