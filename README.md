@@ -96,7 +96,7 @@ parameters.add(new MParameter(LocalDate.class, "birthday"));
 parameters.add(new MParameter(boolean.class, "active"));
 // List<String> tags
 parameters.add(new MParameter(List.class, String.class, "tags"));
-// Map<String, User> tags
+// Map<String, User> friends
 parameters.add(new MParameter(Map.class, "<String, User>", "friends"));
 MClass bean = pckg.newBean("User", parameters);
 // ----------------------------------------------------------------------------------
