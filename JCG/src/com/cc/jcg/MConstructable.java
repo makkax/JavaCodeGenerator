@@ -2,6 +2,7 @@ package com.cc.jcg;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,9 +17,6 @@ import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.cc.jcg.MMethod.MMethodModifier;
-import com.thoughtworks.paranamer.BytecodeReadingParanamer;
-import com.thoughtworks.paranamer.CachingParanamer;
-import com.thoughtworks.paranamer.Paranamer;
 
 @SuppressWarnings("rawtypes")
 abstract class MConstructable<T extends MType>
@@ -292,12 +290,11 @@ abstract class MConstructable<T extends MType>
 
     // ----------------------------------------------------------------------------------------------------------------------
     public final MMethod addMethod(Method method) {
-	final Paranamer paranamer = new CachingParanamer(new BytecodeReadingParanamer());
-	final String[] parameterNames = paranamer.lookupParameterNames(method, false);
 	final MParameter[] parameters = new MParameter[method.getParameterTypes().length];
 	int i = 0;
-	for (final Class<?> type : method.getParameterTypes()) {
-	    final String name = parameterNames.length > 0 ? parameterNames[i] : "arg" + i;
+	for (final Parameter par : method.getParameters()) {
+	    Class<?> type = par.getType();
+	    final String name = par.getName();
 	    parameters[i] = new MParameter(type, name);
 	    if (method.getGenericParameterTypes()[i] instanceof ParameterizedType) {
 		String generic = ((ParameterizedType) method.getGenericParameterTypes()[i]).toString();
@@ -312,7 +309,7 @@ abstract class MConstructable<T extends MType>
 	    generic = generic.substring(generic.indexOf("<"));
 	    copy.setGenericReturnType(generic);
 	}
-	// generics?!
+	// TODO: generics?!
 	return copy;
     }
 

@@ -3,6 +3,7 @@ package com.cc.jcg;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,8 +17,6 @@ import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.cc.jcg.MMethod.MMethodModifier;
-import com.thoughtworks.paranamer.BytecodeReadingParanamer;
-import com.thoughtworks.paranamer.CachingParanamer;
 
 public class MInterface
 	extends MAnnotated<MInterface>
@@ -165,17 +164,13 @@ public class MInterface
 
     public MAbstractMethod addMethod(Method m) {
 	final List<MParameter> parameters = new ArrayList<MParameter>();
-	final String[] parameterNames = new CachingParanamer(new BytecodeReadingParanamer()).lookupParameterNames(m, false);
 	int i = 0;
-	for (final Class<?> pt : m.getParameterTypes()) {
-	    final String name = parameterNames.length == 0 ? "par" + i : parameterNames[i];
-	    parameters.add(new MParameter(pt, name));// Generic!?
+	for (final Parameter par : m.getParameters()) {
+	    final String name = par.getName();
+	    parameters.add(new MParameter(par.getType(), name));// Generic !?
 	    i++;
 	}
 	final MAbstractMethod copy = addMethod(m.getName(), m.getReturnType(), parameters.toArray(new MParameter[parameters.size()]));
-	// if (m.getGenericReturnType() != null) {
-	// copy.setGenericReturnType(m.getGenericReturnType());
-	// }
 	return copy;
     }
 
@@ -184,7 +179,8 @@ public class MInterface
 	int i = 0;
 	for (final Class<?> pt : m.getParameterTypes()) {
 	    final String name = parameterNames.get(i);
-	    parameters.add(new MParameter(pt, name));// Generic!?
+	    parameters.add(new MParameter(pt, name));
+	    // TODO: generics?!
 	    i++;
 	}
 	final MAbstractMethod copy = addMethod(m.getName(), m.getReturnType(), parameters.toArray(new MParameter[parameters.size()]));
