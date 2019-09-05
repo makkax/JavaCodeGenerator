@@ -29,17 +29,27 @@ The quickest way to start using JCG is to include the following Maven dependency
 
 https://makkax.github.io/JavaCodeGenerator
 
-## Highlights
+## Basic Usage
 
 All you need to do to start generating Java code is to create a `MBundle` and some `MPackage` with 
 ```java
 MBundle bundle = new MBundle(new File("src-generated"));
 MPackage pckg = bundle.newPackage("com.jcg.gen");
 ```
-and start adding interfaces, classes, fields, methods; once you are ready, you tell your `bundle` to generate the code with
+and start adding interfaces, classes, fields, methods:
+```java
+MInterface intf = pckg.newInterface("SomeInterface");
+MClass cls = intf.newImplementation("SomeInterfaceImpl");
+cls.addMethod("doit", void.class).setCodeBlock(block -> {
+    block.addLine("// ok I do it...");
+});
+```
+Finally you tell your `bundle` to generate the code with
 ```java
 bundle.generateCode(clean);
 ```
+
+## Highlights
 
 * **imports** are automatically handled or can be manually added with the method `addImport`
 * the generated code is automatically **indented**
@@ -47,6 +57,8 @@ bundle.generateCode(clean);
 * **Generics** can be added to classes, interfaces and methods
 * **Annotations** can be added to classes, interfaces, fields and methods
 * a basic **Exceptions handling** is configurable for methods
+
+## Model
 
 Each Java generated element is represented by a class that can be directly accessed to create the needed code:
 
@@ -84,7 +96,7 @@ parameters.add(new MParameter(LocalDate.class, "birthday"));
 parameters.add(new MParameter(boolean.class, "active"));
 // List<String> tags
 parameters.add(new MParameter(List.class, String.class, "tags"));
-// Map<String, User> tags
+// Map<String, User> friends
 parameters.add(new MParameter(Map.class, "<String, User>", "friends"));
 MClass bean = pckg.newBean("User", parameters);
 // ----------------------------------------------------------------------------------
