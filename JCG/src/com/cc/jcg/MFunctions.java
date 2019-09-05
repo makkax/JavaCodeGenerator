@@ -17,10 +17,6 @@ import java.util.function.BiConsumer;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.thoughtworks.paranamer.BytecodeReadingParanamer;
-import com.thoughtworks.paranamer.CachingParanamer;
-import com.thoughtworks.paranamer.Paranamer;
-
 public class MFunctions {
 
     private static final List<Class<?>> PRIMITIVE_TYPES = new ArrayList<Class<?>>();
@@ -607,16 +603,11 @@ public class MFunctions {
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------------
-    public static List<MParameter> extractParameters(Method method, boolean useParanamer) {
+    public static List<MParameter> extractParameters(Method method) {
 	final List<MParameter> list = new ArrayList<MParameter>();
-	String[] parameterNames = null;
-	if (useParanamer) {
-	    final Paranamer paranamer = new CachingParanamer(new BytecodeReadingParanamer());
-	    parameterNames = paranamer.lookupParameterNames(method, false);
-	}
 	int i = 0;
 	for (final Parameter parameter : method.getParameters()) {
-	    final String name = useParanamer && parameterNames.length > 0 ? parameterNames[i] : parameter.getName();
+	    final String name = parameter.getName();
 	    final MParameter p = new MParameter(parameter.getType(), name);
 	    if (getGenericTypesCount(parameter) > 0) {
 		p.setGeneric(toGenericString(p, getGenericTypes(parameter)));

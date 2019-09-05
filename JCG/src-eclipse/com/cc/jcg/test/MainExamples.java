@@ -37,8 +37,10 @@ public class MainExamples {
 	parameters.add(new MParameter(String.class, "email"));
 	parameters.add(new MParameter(LocalDate.class, "birthday"));
 	parameters.add(new MParameter(boolean.class, "active"));
-	parameters.add(new MParameter(List.class, String.class, "tags"));// List<String> tags
-	parameters.add(new MParameter(Map.class, "<String, User>", "friends"));// Map<String, User> tags
+	// List<String> tags
+	parameters.add(new MParameter(List.class, String.class, "tags"));
+	// Map<String, User> friends
+	parameters.add(new MParameter(Map.class, "<String, User>", "friends"));
 	MClass bean = pckg.newBean("User", parameters);
 	// ----------------------------------------------------------------------------------------------------------------
 	MMethod activate = bean.addMethod("activate", void.class);
