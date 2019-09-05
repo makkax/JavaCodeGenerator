@@ -1,0 +1,1 @@
+mvn install:install-file -DgroupId=cc -DartifactId=jcg -Dversion=1.0 -Dfile=..\JavaCodeGenerator\JCG\target\jcg-1.0.jar -Dpackaging=jar -DpomFile=..\JavaCodeGenerator\JCG\pom.xml -DlocalRepositoryPath=. -DcreateChecksum=true
