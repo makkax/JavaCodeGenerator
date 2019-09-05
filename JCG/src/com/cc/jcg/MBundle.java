@@ -20,6 +20,7 @@ public class MBundle
 	extends MFunctions
 	implements MGenerator {
 
+    public static final String VERSION = "1.0";
     public static final AtomicBoolean EXCLUDE_GENERATED_ANNOTATION = new AtomicBoolean(true);
     public static final AtomicBoolean GENERATE_READONLY = MPackage.GENERATE_READONLY;
     public static final AtomicBoolean DO_NOT_GENERATE_EMPTY_PACKAGES = new AtomicBoolean(false);
