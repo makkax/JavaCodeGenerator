@@ -25,9 +25,6 @@ import org.apache.commons.lang3.builder.StandardToStringStyle;
 
 import com.cc.jcg.MConstructor.MConstructorModifier;
 import com.cc.jcg.MMethod.MMethodModifier;
-import com.thoughtworks.paranamer.BytecodeReadingParanamer;
-import com.thoughtworks.paranamer.CachingParanamer;
-import com.thoughtworks.paranamer.Paranamer;
 
 public class MClass
 	extends MConstructable<MClass>
@@ -442,10 +439,6 @@ public class MClass
     }
 
     public List<MConstructor> overrideConstructors() {
-	return overrideConstructors(false);
-    }
-
-    public List<MConstructor> overrideConstructors(boolean parseParameterNames) {
 	final List<MConstructor> createds = new ArrayList<MConstructor>();
 	final MTypeRef ref = getSuperclass();
 	if (ref != null) {
@@ -466,7 +459,7 @@ public class MClass
 		    final MJavaFile type = (MJavaFile) casted.getRef();
 		    try {
 			final Class<?> javaType = type.getJavaType();
-			createds.addAll(generateConstructors(javaType, parseParameterNames));
+			createds.addAll(generateConstructors(javaType));
 		    } catch (final Exception e) {
 			e.printStackTrace();
 		    }
@@ -475,24 +468,23 @@ public class MClass
 	    if (ref instanceof MTypeRefJava) {
 		final MTypeRefJava casted = (MTypeRefJava) ref;
 		final Class<?> type = casted.getRef();
-		createds.addAll(generateConstructors(type, parseParameterNames));
+		createds.addAll(generateConstructors(type));
 	    }
 	}
 	return createds;
     }
 
-    public List<MConstructor> generateConstructors(Class<?> type, boolean parseParameterNames) {
+    public List<MConstructor> generateConstructors(Class<?> type) {
 	final List<MConstructor> createds = new ArrayList<MConstructor>();
 	for (final Constructor<?> jc : type.getDeclaredConstructors()) {
 	    final Set<MParameter> parameters = new LinkedHashSet<MParameter>();
 	    StringBuffer names = new StringBuffer();
 	    final AtomicInteger index = new AtomicInteger(0);
 	    int indx = 0;
-	    final Paranamer paranamer = new CachingParanamer(new BytecodeReadingParanamer());
-	    final String[] parameterNames = parseParameterNames ? paranamer.lookupParameterNames(jc, false) : null;
-	    for (final Parameter jp : jc.getParameters()) { // TODO: Generics!
-		final Class<?> jpt = jp.getType();
-		final String name = parameterNames != null && parameterNames.length > indx ? parameterNames[indx] : "p" + index.incrementAndGet();// backward
+	    for (final Parameter par : jc.getParameters()) {
+		// TODO: generics?!
+		final Class<?> jpt = par.getType();
+		final String name = par.getName();
 		boolean add = true;
 		for (final MJavaFile jf : pckg.getJavaFiles()) {
 		    if (jf.getOriginalPackage().concat("." + jf.getOriginalName()).equals(jpt.getName())) {
@@ -504,8 +496,8 @@ public class MClass
 		}
 		if (add) {
 		    final MParameter p = new MParameter(jpt, name);
-		    if (MFunctions.getGenericTypesCount(jp) > 0) {
-			p.setGeneric(MFunctions.toGenericString(p, MFunctions.getGenericType(jp)));
+		    if (MFunctions.getGenericTypesCount(par) > 0) {
+			p.setGeneric(MFunctions.toGenericString(p, MFunctions.getGenericType(par)));
 		    }
 		    parameters.add(p);
 		}
