@@ -25,6 +25,10 @@ The quickest way to start using JCG is to include the following Maven dependency
 </dependencies>
 ```
 
+## JavaCodeGenerator 1.0 API
+
+https://makkax.github.io/JavaCodeGenerator
+
 ## Highlights
 
 All you need to do to start generating Java code is to create a `MBundle` and some `MPackage` with 
