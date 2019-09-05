@@ -58,7 +58,7 @@ Each Java generated element is represented by a class that can be directly acces
 |                 |  `MTypeRefJava`    = `MTypeRef<Class<?>>`
 |                 |  `MTypeRefModel`   = `MTypeRef<MType>`
 
-[show JCG model](https://github.com/alecbigger/JavaCodeGenerator/blob/master/JCG/CodeGeneratorDSL.png)
+[show JCG model](https://github.com/makkax/JavaCodeGenerator/blob/master/JCG/CodeGeneratorDSL.png)
 
 ## Examples
 
