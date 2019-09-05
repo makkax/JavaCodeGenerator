@@ -6,7 +6,9 @@ The goal of JCG is not to cover all Java language features, but it's to allow th
 
 ## Installation
 
-The quickest way to start using JCG is to include the following Maven dependency into your pom.xml file:
+The quickest way to start using JCG is to include the following Maven dependency into your pom.xml file.
+
+The current release is ***1.1***:
 
 ```maven
 <repositories>
@@ -20,12 +22,12 @@ The quickest way to start using JCG is to include the following Maven dependency
     <dependency>
         <groupId>cc</groupId>
         <artifactId>jcg</artifactId>
-        <version>1.0</version>
+        <version>1.1</version>
     </dependency>
 </dependencies>
 ```
 
-## JavaCodeGenerator 1.0 API
+## JavaCodeGenerator 1.1 API
 
 https://makkax.github.io/JavaCodeGenerator
 
