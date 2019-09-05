@@ -4,6 +4,10 @@ JCG is a powerful Java code generator.
 Unlike most generators, JCG is not based on templates; its a **DSL in pure Java** to generate Java!
 The goal of JCG is not to cover all Java language features, but it's to allow the creation of powerful, robust and well designed generators.
 
+## JavaCodeGenerator 1.0 API
+
+https://makkax.github.io/JavaCodeGenerator
+
 ## Installation
 
 The quickest way to start using JCG is to include the following Maven dependency into your pom.xml file:
