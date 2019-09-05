@@ -36,7 +36,7 @@ All you need to do to start generating Java code is to create a `MBundle` and so
 MBundle bundle = new MBundle(new File("src-generated"));
 MPackage pckg = bundle.newPackage("com.jcg.gen");
 ```
-and start adding interfaces, classes, fields, methods; 
+and start adding interfaces, classes, fields, methods:
 ```java
 MInterface intf = pckg.newInterface("SomeInterface");
 MClass cls = intf.newImplementation("SomeInterfaceImpl");
@@ -44,7 +44,7 @@ cls.addMethod("doit", void.class).setCodeBlock(block -> {
     block.addLine("// ok I do it...");
 });
 ```
-once you are ready, you tell your `bundle` to generate the code with
+Finally you tell your `bundle` to generate the code with
 ```java
 bundle.generateCode(clean);
 ```
@@ -57,6 +57,8 @@ bundle.generateCode(clean);
 * **Generics** can be added to classes, interfaces and methods
 * **Annotations** can be added to classes, interfaces, fields and methods
 * a basic **Exceptions handling** is configurable for methods
+
+## Model
 
 Each Java generated element is represented by a class that can be directly accessed to create the needed code:
 
