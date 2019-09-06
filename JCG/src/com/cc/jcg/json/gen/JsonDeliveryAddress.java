@@ -1,9 +1,11 @@
 package com.cc.jcg.json.gen;
 
 import com.cc.jcg.MGenerated;
+import com.cc.jcg.json.JsonBean;
 
 @MGenerated
-public class DeliveryAddress {
+public class JsonDeliveryAddress
+        implements JsonBean {
     
     private String firstName;
     private String lastName;
@@ -15,8 +17,9 @@ public class DeliveryAddress {
     private String state;
     private String countryCode;
     private String telephoneNumber;
+    private JsonToken token;
     
-    public DeliveryAddress() {
+    public JsonDeliveryAddress() {
         super();
     }
     
@@ -98,5 +101,13 @@ public class DeliveryAddress {
     
     public final synchronized void setTelephoneNumber(String telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
+    }
+    
+    public final synchronized JsonToken getToken() {
+        return token;
+    }
+    
+    public final synchronized void setToken(JsonToken token) {
+        this.token = token;
     }
 }
