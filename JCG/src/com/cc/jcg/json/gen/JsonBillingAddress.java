@@ -1,16 +1,18 @@
 package com.cc.jcg.json.gen;
 
 import com.cc.jcg.MGenerated;
+import com.cc.jcg.json.JsonBean;
 
 @MGenerated
-public class BillingAddress {
+public class JsonBillingAddress
+        implements JsonBean {
     
     private String address1;
     private String postalCode;
     private String city;
     private String countryCode;
     
-    public BillingAddress() {
+    public JsonBillingAddress() {
         super();
     }
     

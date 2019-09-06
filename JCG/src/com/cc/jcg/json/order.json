@@ -1,5 +1,8 @@
 {
-	"token": "your-token",
+	"token": {
+		"type": "top-token",
+		"value": "your-token"
+	},
 	"orderType": "your-orderType-option",
 	"amount": 500,
 	"authorizeOnly": true,
@@ -23,7 +26,11 @@
 		"city": "city",
 		"state": "state",
 		"countryCode": "GB",
-		"telephoneNumber": "02079460761"
+		"telephoneNumber": "02079460761",
+		"token": {
+			"type": "address-token",
+			"value": "some-token"
+		}
 	},
 	"shopperEmailAddress": "name@domain.co.uk",
 	"shopperIpAddress": "127.0.0.1",
@@ -33,5 +40,9 @@
 		"car",
 		"toy"
 	],
-	"taxes": [0.24,0.55,0.69]	
+	"taxes": [
+		0.24,
+		0.55,
+		0.69
+	]
 }

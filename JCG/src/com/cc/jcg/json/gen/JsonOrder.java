@@ -1,12 +1,14 @@
 package com.cc.jcg.json.gen;
 
 import com.cc.jcg.MGenerated;
+import com.cc.jcg.json.JsonBean;
 import java.util.List;
 
 @MGenerated
-public class Order {
+public class JsonOrder
+        implements JsonBean {
     
-    private String token;
+    private JsonToken token;
     private String orderType;
     private Double amount;
     private Boolean authorizeOnly;
@@ -14,23 +16,23 @@ public class Order {
     private String orderDescription;
     private String customerOrderCode;
     private String name;
-    private BillingAddress billingAddress;
-    private DeliveryAddress deliveryAddress;
+    private JsonBillingAddress billingAddress;
+    private JsonDeliveryAddress deliveryAddress;
     private String shopperEmailAddress;
     private String shopperIpAddress;
     private String shopperSessionId;
     private List<String> items;
     private List<Double> taxes;
     
-    public Order() {
+    public JsonOrder() {
         super();
     }
     
-    public final synchronized String getToken() {
+    public final synchronized JsonToken getToken() {
         return token;
     }
     
-    public final synchronized void setToken(String token) {
+    public final synchronized void setToken(JsonToken token) {
         this.token = token;
     }
     
@@ -90,19 +92,19 @@ public class Order {
         this.name = name;
     }
     
-    public final synchronized BillingAddress getBillingAddress() {
+    public final synchronized JsonBillingAddress getBillingAddress() {
         return billingAddress;
     }
     
-    public final synchronized void setBillingAddress(BillingAddress billingAddress) {
+    public final synchronized void setBillingAddress(JsonBillingAddress billingAddress) {
         this.billingAddress = billingAddress;
     }
     
-    public final synchronized DeliveryAddress getDeliveryAddress() {
+    public final synchronized JsonDeliveryAddress getDeliveryAddress() {
         return deliveryAddress;
     }
     
-    public final synchronized void setDeliveryAddress(DeliveryAddress deliveryAddress) {
+    public final synchronized void setDeliveryAddress(JsonDeliveryAddress deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
     }
     
