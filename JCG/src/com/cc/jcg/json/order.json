@@ -1,0 +1,37 @@
+{
+	"token": "your-token",
+	"orderType": "your-orderType-option",
+	"amount": 500,
+	"authorizeOnly": true,
+	"currencyCode": "GBP",
+	"orderDescription": "Order description",
+	"customerOrderCode": "Order code",
+	"name": "John Smith",
+	"billingAddress": {
+		"address1": "address1",
+		"postalCode": "postCode",
+		"city": "city",
+		"countryCode": "GB"
+	},
+	"deliveryAddress": {
+		"firstName": "John",
+		"lastName": "Smith",
+		"address1": "address1",
+		"address2": "address2",
+		"address3": "address3",
+		"postalCode": "postCode",
+		"city": "city",
+		"state": "state",
+		"countryCode": "GB",
+		"telephoneNumber": "02079460761"
+	},
+	"shopperEmailAddress": "name@domain.co.uk",
+	"shopperIpAddress": "127.0.0.1",
+	"shopperSessionId": "123",
+	"items": [
+		"umbrella",
+		"car",
+		"toy"
+	],
+	"taxes": [0.24,0.55,0.69]	
+}
