@@ -1,4 +1,6 @@
 com.cc.jcg
+com.cc.jcg.json
+com.cc.jcg.json.gen
 com.cc.jcg.tools
 com.cc.jcg.tools.reflection
 com.cc.jcg.tools.xml
