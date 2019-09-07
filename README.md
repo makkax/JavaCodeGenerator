@@ -405,7 +405,8 @@ public abstract class ClassModifierDispatcher<R>
     protected abstract R DEFAULT();
 }
 ```
-### Example 5 - `MJsonGenerator´
+
+### Example 5 - `MJsonGenerator`
 
 To generate a set of Java Beans for a given JSON file like
 
