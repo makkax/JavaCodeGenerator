@@ -37,6 +37,7 @@ class MJsonGeneratorTest {
 	JsonOrder order = MJsonGenerator.getBean(JsonOrder.class, file);
 	assertNotNull(order.getName());
 	assertNotNull(order.getToken());
+	assertNotNull(order.getBillingAddress().getToken());
 	assertNotNull(order.getBillingAddress());
 	assertNotNull(order.getTaxes());
 	System.out.println(MJsonGenerator.toJson(order));
