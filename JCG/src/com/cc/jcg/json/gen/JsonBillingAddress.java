@@ -11,6 +11,7 @@ public class JsonBillingAddress
     private String postalCode;
     private String city;
     private String countryCode;
+    private JsonToken2 token2;
     
     public JsonBillingAddress() {
         super();
@@ -46,5 +47,13 @@ public class JsonBillingAddress
     
     public final synchronized void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
+    }
+    
+    public final synchronized JsonToken2 getToken2() {
+        return token2;
+    }
+    
+    public final synchronized void setToken2(JsonToken2 token2) {
+        this.token2 = token2;
     }
 }
