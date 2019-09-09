@@ -8,7 +8,7 @@ The goal of JCG is not to cover all Java language features, but it's to allow th
 
 The quickest way to start using JCG is to include the following Maven dependency into your pom.xml file.
 
-The current release is ***1.1***:
+The current release is ***1.2***:
 
 ```maven
 <repositories>
@@ -22,12 +22,12 @@ The current release is ***1.1***:
     <dependency>
         <groupId>cc</groupId>
         <artifactId>jcg</artifactId>
-        <version>1.1</version>
+        <version>1.2</version>
     </dependency>
 </dependencies>
 ```
 
-## JavaCodeGenerator 1.1 API
+## JavaCodeGenerator 1.2 API
 
 https://makkax.github.io/JavaCodeGenerator
 
@@ -404,4 +404,85 @@ public abstract class ClassModifierDispatcher<R>
     
     protected abstract R DEFAULT();
 }
+```
+
+### Example 5 - `MJsonGenerator`
+
+To generate a set of Java Beans for a given JSON file like
+
+```json
+{
+    "token": {
+        "type": "top-token",
+        "value": "your-token"
+    },
+    "orderType": "your-orderType-option",
+    "amount": 500,
+    "authorizeOnly": true,
+    "currencyCode": "GBP",
+    "orderDescription": "Order description",
+    "customerOrderCode": "Order code",
+    "name": "John Smith",
+    "billingAddress": {
+        "address1": "address1",
+        "postalCode": "postCode",
+        "city": "city",
+        "countryCode": "GB"
+    },
+    "deliveryAddress": {
+        "firstName": "John",
+        "lastName": "Smith",
+        "address1": "address1",
+        "address2": "address2",
+        "address3": "address3",
+        "postalCode": "postCode",
+        "city": "city",
+        "state": "state",
+        "countryCode": "GB",
+        "telephoneNumber": "02079460761",
+        "token": {
+            "type": "address-token",
+            "value": "some-token"
+        }
+    },
+    "shopperEmailAddress": "name@domain.co.uk",
+    "shopperIpAddress": "127.0.0.1",
+    "shopperSessionId": "123",
+    "items": [
+        "umbrella",
+        "car",
+        "toy"
+    ],
+    "taxes": [
+        0.24,
+        0.55,
+        0.69
+    ]
+}
+```
+
+The following code:
+
+```java
+// ----------------------------------------------------------------------------------------------------------------
+MBundle bundle = new MBundle(new File("src"));
+MPackage pckg = bundle.newPackage("com.cc.jcg.json.gen");
+// ----------------------------------------------------------------------------------------------------------------
+MJsonGenerator generator = new MJsonGenerator(pckg);
+generator.setClassesNamePrefix("Json");
+File file = new File("src/com/cc/jcg/json/order.json");
+generator.generateJsonBeanFor(file, "Order");
+// ----------------------------------------------------------------------------------------------------------------
+bundle.generateCode(false);
+// ----------------------------------------------------------------------------------------------------------------
+```
+will generate the 4 classes: `JsonOrder.java`, `JsonBillingAddress.java`, `JsonDeliveryAddress.java`, `JsonToken.java`.
+
+To parse a JSON file into the generated Bean `JsonOrder` or store an object to a JSON file :
+
+```java
+File file = new File("src/com/cc/jcg/json/order.json");
+JsonOrder order = MJsonGenerator.getBean(JsonOrder.class, file);
+System.out.println(MJsonGenerator.toJson(order));
+MJsonGenerator.toJsonFile(order, new File("src/com/cc/jcg/json/order2.json"));
 ```
