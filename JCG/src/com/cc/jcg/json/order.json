@@ -14,7 +14,12 @@
 		"address1": "address1",
 		"postalCode": "postCode",
 		"city": "city",
-		"countryCode": "GB"
+		"countryCode": "GB",
+		"token": {
+			"type": "top-token",
+			"auth": "your-name",
+			"comment": "this has the same name, but other keys"
+		}
 	},
 	"deliveryAddress": {
 		"firstName": "John",
