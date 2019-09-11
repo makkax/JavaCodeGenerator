@@ -197,7 +197,19 @@ public class MPackage
 	return supertype.newSubclass(name);
     }
 
+    public MClass newSubclass(Class<?> supertype, String name) {
+	final MClass type = newClass(name);
+	type.setSuperclass(supertype);
+	return type;
+    }
+
     public MClass newClass(MInterface intf, String name) {
+	final MClass type = newClass(name);
+	type.addInterface(intf);
+	return type;
+    }
+
+    public MClass newClass(Class<?> intf, String name) {
 	final MClass type = newClass(name);
 	type.addInterface(intf);
 	return type;
