@@ -414,6 +414,13 @@ public class MClass
 	return this;
     }
 
+    public MClass addInterface(Class<?> type, MClass generic) {
+	addInterface(type);
+	interfaceGenerics.put(type, generic.getName());
+	addExtraImport(generic);
+	return this;
+    }
+
     public final synchronized boolean isFinal() {
 	return isFinal;
     }

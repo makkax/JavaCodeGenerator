@@ -32,11 +32,11 @@ class MJdbcCriteriaGeneratorTest {
 	columnDefs.add(new MJdbcColumnDefImpl("FIRST_NAME", String.class));
 	columnDefs.add(new MJdbcColumnDefImpl("LAST_NAME", String.class));
 	columnDefs.add(new MJdbcColumnDefImpl("DATE", Date.class));
-	columnDefs.add(new MJdbcColumnDefImpl("ACTIVE", Boolean.class));
+	columnDefs.add(new MJdbcColumnDefImpl("ACTIVE", boolean.class));
 	columnDefs.add(new MJdbcColumnDefImpl("ITEMS", String.class, true));
-	generator.generateJdbcCriteria("SimpleCriteria", columnDefs);
+	generator.generateJdbcCriteria("Simple", columnDefs);
 	// ----------------------------------------------------------------------------------------------------------------
-	bundle.generateCode(false);
+	bundle.generateCode(true);
 	// ----------------------------------------------------------------------------------------------------------------
     }
 
@@ -51,10 +51,11 @@ class MJdbcCriteriaGeneratorTest {
 	// ----------------------------------------------------------------------------------------------------------------
 	MJdbcCriteriaGenerator generator = new MJdbcCriteriaGenerator(pckg);
 	Properties properties = new Properties();
+	// jdbc.url, jdbc.username, jdbc.password
 	properties.load(new FileInputStream("database-connection.properties"));
 	Connection connection = new JDBCConnectionProviderOracle(properties).getNewConnection();
 	generator.generateJdbcCriterias(connection, name -> {
-	    return name.equals("???");
+	    return name.equals(properties.getProperty("table.name"));
 	});
 	// ----------------------------------------------------------------------------------------------------------------
 	bundle.generateCode(false);
