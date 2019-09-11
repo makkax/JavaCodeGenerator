@@ -18,7 +18,7 @@ import com.cc.jcg.MMethod;
 import com.cc.jcg.MPackage;
 import com.cc.jcg.jdbc.JdbcCriteria;
 import com.cc.jcg.jdbc.JdbcCriteriaBase;
-import com.cc.jcg.jdbc.SQLTypeMap;
+import com.cc.jcg.jdbc.QueryByCriteria;
 
 public class MJdbcCriteriaGenerator {
 
@@ -146,10 +146,12 @@ public class MJdbcCriteriaGenerator {
     }
 
     public void generateJdbcCriteria(String tableName, Collection<MJdbcColumnDef> columnDefs) throws ClassNotFoundException {
+	// -------------------------------------------------------------------------------------------------------------------------
 	if (visitor != null) {
 	    columnDefs.forEach(cd -> visitor.accept(cd));
 	}
-	MClass cls = pckg.newClass(JdbcCriteria.class, MFunctions.camelize(MFunctions.labelize(tableName).replace(" ", "")));
+	String clsName = MFunctions.camelize(MFunctions.labelize(MFunctions.constantize(tableName)).replace(" ", ""));
+	MClass cls = pckg.newClass(JdbcCriteria.class, clsName.concat("Criteria"));
 	cls.setSuperclass(JdbcCriteriaBase.class);
 	cls.overrideConstructors();
 	MMethod addColumns = cls.addMethod("addColumns", void.class).makeProtected().overrides();
@@ -168,5 +170,15 @@ public class MJdbcCriteriaGenerator {
 	    }
 	}
 	addColumns.setBlockContent(addColumnsCode);
+	// -------------------------------------------------------------------------------------------------------------------------
+	String entityName = MFunctions.camelize(MFunctions.labelize(MFunctions.constantize(tableName)).replace(" ", ""));
+	MClass entity = pckg.newClass(entityName.concat("Entity"));
+	for (MJdbcColumnDef cdef : columnDefs) {
+	    String fieldName = MFunctions.fieldname(MFunctions.labelize(cdef.getColumnName()).replace(" ", ""));
+	    MField fld = entity.addField(cdef.getValueType(), fieldName);
+	    AccessorMethods accessors = fld.addAccessorMethods();
+	}
+	cls.addInterface(QueryByCriteria.class, entity);
+	// -------------------------------------------------------------------------------------------------------------------------
     }
 }

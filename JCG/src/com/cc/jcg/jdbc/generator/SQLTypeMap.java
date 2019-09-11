@@ -1,4 +1,4 @@
-package com.cc.jcg.jdbc;
+package com.cc.jcg.jdbc.generator;
 
 import java.sql.Types;
 
