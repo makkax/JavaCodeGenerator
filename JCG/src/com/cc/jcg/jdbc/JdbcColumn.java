@@ -1,7 +1,7 @@
 package com.cc.jcg.jdbc;
 
 public interface JdbcColumn<T>
-	extends Comparable<JdbcColumn<?>> {
+	extends Comparable<JdbcColumn<?>>, Enabled {
 
     Class<T> getValueType();
 
