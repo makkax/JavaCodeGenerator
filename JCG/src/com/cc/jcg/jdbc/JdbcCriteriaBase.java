@@ -55,7 +55,7 @@ public abstract class JdbcCriteriaBase
     }
 
     @Override
-    public Collection<JdbcColumn<?>> getColumns() {
+    public Collection<JdbcColumn<?>> getAllColumns() {
 	return columns;
     }
 
@@ -104,6 +104,7 @@ public abstract class JdbcCriteriaBase
 
 	    private Integer sortOrder = null;
 	    private String label = labelize(columnName);
+	    private boolean enabled = true;
 
 	    @Override
 	    public final Class<T> getValueType() {
@@ -149,6 +150,16 @@ public abstract class JdbcCriteriaBase
 	    public void setValue(T value) {
 		setter.accept(value);
 	    }
+
+	    @Override
+	    public synchronized boolean isEnabled() {
+		return enabled;
+	    }
+
+	    @Override
+	    public synchronized void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	    }
 	};
 	columns.add(column);
 	column.setSortOrder(columns.size() - 1);
@@ -160,6 +171,7 @@ public abstract class JdbcCriteriaBase
 
 	    private Integer sortOrder = null;
 	    private String label = labelize(columnName);
+	    private boolean enabled = true;
 
 	    @Override
 	    public final Class<T> getValueType() {
@@ -204,6 +216,16 @@ public abstract class JdbcCriteriaBase
 	    @Override
 	    public void setValue(List<T> values) {
 		setter.accept(values);
+	    }
+
+	    @Override
+	    public synchronized boolean isEnabled() {
+		return enabled;
+	    }
+
+	    @Override
+	    public synchronized void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	    }
 	};
 	columns.add(column);
