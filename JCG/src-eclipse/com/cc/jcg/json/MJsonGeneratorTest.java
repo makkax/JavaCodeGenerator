@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import com.cc.jcg.MBundle;
 import com.cc.jcg.MPackage;
-import com.cc.jcg.json.gen.JsonOrder;
 
 class MJsonGeneratorTest {
 
@@ -21,7 +20,7 @@ class MJsonGeneratorTest {
 	MBundle.GENERATE_READONLY.set(true);
 	// ----------------------------------------------------------------------------------------------------------------
 	MBundle bundle = new MBundle(new File("src-generated"));
-	MPackage pckg = bundle.newPackage("com.cc.jcg.json.gen");
+	MPackage pckg = bundle.newPackage("com.cc.jcg.json");
 	// ----------------------------------------------------------------------------------------------------------------
 	MJsonGenerator generator = new MJsonGenerator(pckg);
 	generator.setClassesNamePrefix("Json");
@@ -41,7 +40,7 @@ class MJsonGeneratorTest {
 	assertNotNull(order.getBillingAddress());
 	assertNotNull(order.getTaxes());
 	System.out.println(MJsonGenerator.toJson(order));
-	MJsonGenerator.toJsonFile(order, new File("src/com/cc/jcg/json/order2.json"));
+	MJsonGenerator.toJsonFile(order, new File("src-eclipse/com/cc/jcg/json/order2.json"));
 	// ----------------------------------------------------------------------------------------------------------------
     }
 }

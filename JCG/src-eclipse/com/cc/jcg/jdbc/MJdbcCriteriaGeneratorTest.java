@@ -25,7 +25,7 @@ class MJdbcCriteriaGeneratorTest {
 	MBundle.GENERATE_READONLY.set(false);
 	// ----------------------------------------------------------------------------------------------------------------
 	MBundle bundle = new MBundle(new File("src-generated"));
-	MPackage pckg = bundle.newPackage("com.cc.jcg.jdbc.gen");
+	MPackage pckg = bundle.newPackage("com.cc.jcg.jdbc");
 	// ----------------------------------------------------------------------------------------------------------------
 	MJdbcCriteriaGenerator generator = new MJdbcCriteriaGenerator(pckg);
 	Collection<MJdbcColumnDef> columnDefs = new ArrayList<>();
@@ -47,7 +47,7 @@ class MJdbcCriteriaGeneratorTest {
 	MBundle.GENERATE_READONLY.set(true);
 	// ----------------------------------------------------------------------------------------------------------------
 	MBundle bundle = new MBundle(new File("src-generated"));
-	MPackage pckg = bundle.newPackage("com.cc.jcg.jdbc.gen");
+	MPackage pckg = bundle.newPackage("com.cc.jcg.jdbc");
 	// ----------------------------------------------------------------------------------------------------------------
 	MJdbcCriteriaGenerator generator = new MJdbcCriteriaGenerator(pckg);
 	Properties properties = new Properties();
