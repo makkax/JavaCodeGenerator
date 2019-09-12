@@ -1,7 +1,6 @@
-package com.cc.jcg.json.gen;
+package com.cc.jcg.json;
 
 import com.cc.jcg.MGenerated;
-import com.cc.jcg.json.JsonBean;
 
 @MGenerated
 public class JsonToken

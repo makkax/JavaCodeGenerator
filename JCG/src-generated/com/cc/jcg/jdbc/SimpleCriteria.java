@@ -1,4 +1,4 @@
-package com.cc.jcg.jdbc.gen;
+package com.cc.jcg.jdbc;
 
 import java.sql.Connection;
 import java.util.Collection;
