@@ -49,8 +49,8 @@ class MJdbcCriteriaGeneratorTest {
 	// ----------------------------------------------------------------------------------------------------------------
 	ConnectionProperties properties = new ConnectionProperties("database-connection.properties");
 	// ----------------------------------------------------------------------------------------------------------------
-	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(false);
-	MBundle.GENERATE_READONLY.set(true);
+	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(true);
+	MBundle.GENERATE_READONLY.set(false);
 	// ----------------------------------------------------------------------------------------------------------------
 	MBundle bundle = new MBundle(new File(properties.getProperty("gen.src.dir")));
 	MPackage pckg = bundle.newPackage(properties.getProperty("gen.pckg"));

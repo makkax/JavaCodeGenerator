@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -167,7 +168,7 @@ public class MJdbcCriteriaGenerator {
 	generateJdbcCriteria(table, columnDefs);
     }
 
-    public void generateJdbcCriteria(String tableName, Collection<MJdbcColumnDef> columnDefs) throws ClassNotFoundException {
+    public synchronized void generateJdbcCriteria(String tableName, Collection<MJdbcColumnDef> columnDefs) throws ClassNotFoundException {
 	// -------------------------------------------------------------------------------------------------------------------------
 	if (visitor != null) {
 	    columnDefs.forEach(cd -> visitor.accept(cd));
@@ -193,6 +194,9 @@ public class MJdbcCriteriaGenerator {
 		MField fld = cls.addField(List.class, fieldName).setGeneric(cdef.getValueType());
 		AccessorMethods accessors = fld.addAccessorMethods();
 		addColumnsCode.append("addJdbcColumnValues(\"" + cdef.getColumnName() + "\", " + cdef.getValueType().getName() + ".class, this::" + accessors.getter().getName() + ", this::" + accessors.setter().getName() + ");\n");
+		MMethod single = cls.addMethod(MFunctions.singular(accessors.setter().getName()), void.class, new MParameter(cdef.getValueType(), "value"));
+		single.setBlockContent(accessors.setter().getName() + "(Collections.singletonList(value));");
+		single.addImport(Collections.class);
 	    }
 	}
 	addColumns.setBlockContent(addColumnsCode);

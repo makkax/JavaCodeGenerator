@@ -105,6 +105,8 @@ public abstract class JdbcCriteriaBase
 	    private Integer sortOrder = null;
 	    private String label = labelize(columnName);
 	    private boolean enabled = true;
+	    private String operator = JdbcColumnValue.super.getOperator();
+	    private final T defaultValue = getValue();
 
 	    @Override
 	    public final Class<T> getValueType() {
@@ -160,6 +162,21 @@ public abstract class JdbcCriteriaBase
 	    public synchronized void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	    }
+
+	    @Override
+	    public synchronized void setOperator(String operator) {
+		this.operator = operator;
+	    }
+
+	    @Override
+	    public synchronized String getOperator() {
+		return operator;
+	    }
+
+	    @Override
+	    public void resetValue() {
+		setValue(defaultValue);
+	    }
 	};
 	columns.add(column);
 	column.setSortOrder(columns.size() - 1);
@@ -172,6 +189,8 @@ public abstract class JdbcCriteriaBase
 	    private Integer sortOrder = null;
 	    private String label = labelize(columnName);
 	    private boolean enabled = true;
+	    private String operator = JdbcColumnValues.super.getOperator();
+	    private final List<T> defaultValues = getValues();
 
 	    @Override
 	    public final Class<T> getValueType() {
@@ -226,6 +245,21 @@ public abstract class JdbcCriteriaBase
 	    @Override
 	    public synchronized void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	    }
+
+	    @Override
+	    public synchronized void setOperator(String operator) {
+		this.operator = operator;
+	    }
+
+	    @Override
+	    public synchronized String getOperator() {
+		return operator;
+	    }
+
+	    @Override
+	    public void resetValue() {
+		setValue(defaultValues);
 	    }
 	};
 	columns.add(column);

@@ -2,6 +2,7 @@ package com.cc.jcg.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -19,8 +20,18 @@ public interface JdbcColumnValues<T>
     }
 
     @Override
+    default List<String> getOperators() {
+	return Arrays.asList("IN", "NOT IN");
+    }
+
+    @Override
+    default String getOperator() {
+	return "IN";
+    }
+
+    @Override
     default void where(StringBuffer sql) {
-	sql.append(getColumnName() + " IN (" + getValues().stream().map(c -> "?").collect(Collectors.joining(",")) + ")");
+	sql.append(getColumnName() + " " + getOperator() + " (" + getValues().stream().map(c -> "?").collect(Collectors.joining(",")) + ")");
     }
 
     @Override

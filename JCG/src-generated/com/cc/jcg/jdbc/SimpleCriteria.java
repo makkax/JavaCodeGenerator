@@ -3,6 +3,7 @@ package com.cc.jcg.jdbc;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -76,6 +77,10 @@ public class SimpleCriteria
     
     public final synchronized void setItems(List<String> items) {
         this.items = items;
+    }
+    
+    public void setItem(String value) {
+        setItems(Collections.singletonList(value));
     }
     
     @Override
