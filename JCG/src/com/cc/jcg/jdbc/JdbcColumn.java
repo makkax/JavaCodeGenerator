@@ -8,6 +8,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public interface JdbcColumn<T>
 	extends Comparable<JdbcColumn<?>>, Enabled {
 
+    // ------------------------------------------------------------------------------------------------
+    // JDBC Column
+    // ------------------------------------------------------------------------------------------------
     Class<T> getValueType();
 
     String getTableName();
@@ -26,12 +29,22 @@ public interface JdbcColumn<T>
 
     void resetValue();
 
+    // ------------------------------------------------------------------------------------------------
+    // JDBC Query
+    // ------------------------------------------------------------------------------------------------
     List<String> getOperators();
 
     String getOperator();
 
     void setOperator(String operator);
 
+    void where(StringBuffer sql);
+
+    void properties(PreparedStatement stm, AtomicInteger parameterIndex) throws SQLException;
+
+    // ------------------------------------------------------------------------------------------------
+    // Comparable<JdbcColumn<?>>
+    // ------------------------------------------------------------------------------------------------
     @Override
     default int compareTo(JdbcColumn o) {
 	Integer so1 = getSortOrder();
@@ -44,8 +57,4 @@ public interface JdbcColumn<T>
 	}
 	return so1.compareTo(so2);
     }
-
-    void where(StringBuffer sql);
-
-    void properties(PreparedStatement stm, AtomicInteger parameterIndex) throws SQLException;
 }
