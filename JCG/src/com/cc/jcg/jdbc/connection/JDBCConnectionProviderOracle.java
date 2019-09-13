@@ -1,14 +1,14 @@
-package com.cc.jcg.jdbc;
+package com.cc.jcg.jdbc.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class JDBCConnectionProviderMSSQL
+public class JDBCConnectionProviderOracle
 	implements JDBCConnectionProvider {
 
-    private static final String JDBC_DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String JDBC_DRIVER_CLASS = "oracle.jdbc.driver.OracleDriver";
     static {
 	try {
 	    System.out.println("loading JDBC_DRIVER_CLASS = " + JDBC_DRIVER_CLASS);
@@ -22,7 +22,7 @@ public class JDBCConnectionProviderMSSQL
     private final String user;
     private final String password;
 
-    public JDBCConnectionProviderMSSQL(String name, String url, String user, String password) {
+    public JDBCConnectionProviderOracle(String name, String url, String user, String password) {
 	super();
 	this.name = name;
 	this.url = url;
@@ -30,17 +30,17 @@ public class JDBCConnectionProviderMSSQL
 	this.password = password;
     }
 
-    public JDBCConnectionProviderMSSQL(String url, String user, String password) {
+    public JDBCConnectionProviderOracle(String url, String user, String password) {
 	super();
-	this.name = "JDBCConnectionProviderMSSQL#" + hashCode();
+	this.name = "JDBCConnectionProviderOracle#" + hashCode();
 	this.url = url;
 	this.user = user;
 	this.password = password;
     }
 
-    public JDBCConnectionProviderMSSQL(Properties properties) {
+    public JDBCConnectionProviderOracle(Properties properties) {
 	super();
-	this.name = "JDBCConnectionProviderMSSQL#" + hashCode();
+	this.name = "JDBCConnectionProviderOracle#" + hashCode();
 	this.url = properties.getProperty("jdbc.url", "jdbc.url");
 	this.user = properties.getProperty("jdbc.username", "jdbc.username");
 	this.password = properties.getProperty("jdbc.password", "jdbc.password");
