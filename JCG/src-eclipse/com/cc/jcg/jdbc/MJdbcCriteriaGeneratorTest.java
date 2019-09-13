@@ -55,21 +55,23 @@ class MJdbcCriteriaGeneratorTest {
 	MBundle bundle = new MBundle(new File(properties.getProperty("gen.src.dir")));
 	MPackage pckg = bundle.newPackage(properties.getProperty("gen.pckg"));
 	// ----------------------------------------------------------------------------------------------------------------
-	MJdbcCriteriaGenerator generator = new MJdbcCriteriaGenerator(pckg);
+	MJdbcCriteriaGenerator generator = new MJdbcCriteriaGenerator(pckg).considerTablesOnly();
 	Connection connection = new JDBCConnectionProviderOracle(properties).getNewConnection();
 	List<String> tables = Arrays.asList(properties.getProperty("table.names").split(","));
 	generator.generateJdbcCriterias(connection, name -> {
-	    for (String table : tables) {
-		if (table.equals(name)) {
-		    return true;
-		} else if (name.matches(table)) {
-		    return true;
+	    if (name.startsWith(properties.getJdbcUsername() + ".")) {
+		for (String table : tables) {
+		    if (table.equals(name)) {
+			return true;
+		    } else if (name.matches(table)) {
+			return true;
+		    }
 		}
 	    }
 	    return false;
 	});
 	// ----------------------------------------------------------------------------------------------------------------
-	bundle.generateCode(false);
+	bundle.generateCode(true);
 	// ----------------------------------------------------------------------------------------------------------------
     }
 }
