@@ -42,6 +42,9 @@ public interface JdbcColumn<T>
 
     void properties(PreparedStatement stm, AtomicInteger parameterIndex) throws SQLException;
 
+    // -N, 0, +N --> DESC, NONE, ASC
+    AtomicInteger getOrderBy();
+
     // ------------------------------------------------------------------------------------------------
     // Comparable<JdbcColumn<?>>
     // ------------------------------------------------------------------------------------------------

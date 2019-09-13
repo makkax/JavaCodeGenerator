@@ -43,6 +43,10 @@ public interface JdbcCriteria {
 	}).filter(JdbcColumn::isEnabled).collect(Collectors.toList());
     }
 
+    default Stream<JdbcColumn<?>> getOrderByColumns() {
+	return getAllColumns().stream().filter(c -> c.getOrderBy().get() != 0);
+    }
+
     default Optional<JdbcColumn<?>> getJdbcColumnByName(String name) {
 	return getAllColumns().stream().filter(c -> c.getColumnName().equals(name)).findFirst();
     }
@@ -51,11 +55,11 @@ public interface JdbcCriteria {
 	return getAllColumns().stream().filter(c -> type.isAssignableFrom(c.getValueType()));
     }
 
-    default Stream<JdbcColumnValue<?>> getJdbcSingleValueColumns(Class<?> type) {
+    default Stream<JdbcColumnValue<?>> getSingleJdbcValueColumns(Class<?> type) {
 	return getAllColumns().stream().filter(c -> c instanceof JdbcColumnValue).map(c -> (JdbcColumnValue<?>) c);
     }
 
-    default Stream<JdbcColumnValues<?>> getJdbcMultipleValuesColumns(Class<?> type) {
+    default Stream<JdbcColumnValues<?>> getMultipleJdbcValuesColumns(Class<?> type) {
 	return getAllColumns().stream().filter(c -> c instanceof JdbcColumnValues).map(c -> (JdbcColumnValues<?>) c);
     }
 

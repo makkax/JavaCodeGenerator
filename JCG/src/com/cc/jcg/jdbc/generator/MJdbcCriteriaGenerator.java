@@ -195,6 +195,7 @@ public class MJdbcCriteriaGenerator {
 		AccessorMethods accessors = fld.addAccessorMethods();
 		addColumnsCode.append("addJdbcColumnValues(\"" + cdef.getColumnName() + "\", " + cdef.getValueType().getName() + ".class, this::" + accessors.getter().getName() + ", this::" + accessors.setter().getName() + ");\n");
 		MMethod single = cls.addMethod(MFunctions.singular(accessors.setter().getName()), void.class, new MParameter(cdef.getValueType(), "value"));
+		single.setFinal(true);
 		single.setBlockContent(accessors.setter().getName() + "(Collections.singletonList(value));");
 		single.addImport(Collections.class);
 	    }
