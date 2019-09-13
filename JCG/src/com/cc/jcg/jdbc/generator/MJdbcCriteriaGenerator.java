@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -16,9 +18,11 @@ import com.cc.jcg.MField.AccessorMethods;
 import com.cc.jcg.MFunctions;
 import com.cc.jcg.MMethod;
 import com.cc.jcg.MPackage;
+import com.cc.jcg.MParameter;
 import com.cc.jcg.jdbc.JdbcCriteria;
 import com.cc.jcg.jdbc.JdbcCriteriaBase;
 import com.cc.jcg.jdbc.QueryByCriteria;
+import com.cc.jcg.jdbc.QueryExecutor;
 
 public class MJdbcCriteriaGenerator {
 
@@ -173,12 +177,36 @@ public class MJdbcCriteriaGenerator {
 	// -------------------------------------------------------------------------------------------------------------------------
 	String entityName = MFunctions.camelize(MFunctions.labelize(MFunctions.constantize(tableName)).replace(" ", ""));
 	MClass entity = pckg.newClass(entityName.concat("Entity"));
+	StringBuffer filler = new StringBuffer();
 	for (MJdbcColumnDef cdef : columnDefs) {
 	    String fieldName = MFunctions.fieldname(MFunctions.labelize(cdef.getColumnName()).replace(" ", ""));
 	    MField fld = entity.addField(cdef.getValueType(), fieldName);
 	    AccessorMethods accessors = fld.addAccessorMethods();
+	    //	e.setActive(rs.getBoolean(columns.get("ACTIVE")));
+	    String getRs = MFunctions.camelize(fld.getType().getSimpleName());
+	    String getCol = cdef.getColumnName();
+	    filler.append("e." + accessors.setter().getName() + "(rs.get" + getRs + "(columns.get(\"" + getCol + "\")));\n");
 	}
 	cls.addInterface(QueryByCriteria.class, entity);
+	// -------------------------------------------------------------------------------------------------------------------------
+	MClass executor = pckg.newClass(entityName.concat("QueryExecutor"));
+	executor.setSuperclass(QueryExecutor.class, entity);
+	executor.overrideConstructors();
+	MMethod newEntity = executor.addMethod("newEntity", entity).overrides();
+	newEntity.setBlockContent("return new " + entity.getName() + "();");
+	// T e, ResultSet rs, Map<String, Integer> columns
+	List<MParameter> parameters = new LinkedList<>();
+	parameters.add(new MParameter(entity, "e"));
+	parameters.add(new MParameter(ResultSet.class, "rs"));
+	parameters.add(new MParameter(Map.class, "<String, Integer>", "columns"));
+	MMethod fillEntity = executor.addMethod("fillEntity", void.class, parameters).overrides();
+	fillEntity.throwsException(SQLException.class);
+	fillEntity.setBlockContent(filler);
+	cls.addField(executor, "executor").setFinal(true).setValue("new " + executor.getName() + "(this);");
+	MMethod executeQuery = cls.addMethod("executeQuery", Collection.class, new MParameter(Connection.class, "connection"));
+	executeQuery.setGenericReturnType("<" + entity.getName() + ">").overrides();
+	executeQuery.throwsException(SQLException.class);
+	executeQuery.setBlockContent("return executor.executeQuery(connection);");
 	// -------------------------------------------------------------------------------------------------------------------------
     }
 }
