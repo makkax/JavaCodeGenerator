@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import com.cc.jcg.MBundle;
 import com.cc.jcg.MPackage;
+import com.cc.jcg.jdbc.connection.ConnectionProperties;
 import com.cc.jcg.jdbc.connection.JDBCConnectionProviderOracle;
 import com.cc.jcg.jdbc.generator.MJdbcColumnDef;
 import com.cc.jcg.jdbc.generator.MJdbcColumnDefImpl;

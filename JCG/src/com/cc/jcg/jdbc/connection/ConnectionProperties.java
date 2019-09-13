@@ -1,4 +1,4 @@
-package com.cc.jcg.jdbc;
+package com.cc.jcg.jdbc.connection;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
