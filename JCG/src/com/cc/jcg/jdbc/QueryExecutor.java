@@ -21,9 +21,14 @@ public abstract class QueryExecutor<T> {
 	this.criteria = criteria;
     }
 
+    public long count(Connection connection) throws SQLException {
+	ResultSet rs = execute(connection, true);
+	return rs.getLong(1);
+    }
+
     public Collection<T> executeQuery(Connection connection) throws SQLException {
 	Collection<T> results = new ArrayList<>();
-	ResultSet rs = execute(connection);
+	ResultSet rs = execute(connection, false);
 	Map<String, Integer> columns = new HashMap<>();
 	criteria.getAllColumns().forEach(c -> columns.put(c.getColumnName(), columns.size() + 1));
 	while (rs.next()) {
@@ -38,17 +43,21 @@ public abstract class QueryExecutor<T> {
 
     protected abstract void fillEntity(T e, ResultSet rs, Map<String, Integer> columns) throws SQLException;
 
-    protected ResultSet execute(Connection connection) throws SQLException {
+    protected ResultSet execute(Connection connection, boolean count) throws SQLException {
 	StringBuffer sql = new StringBuffer();
 	sql.append("SELECT ");
-	sql.append(criteria.getAllColumns().stream().map(c -> c.getColumnName()).collect(Collectors.joining(", ")));
+	if (count) {
+	    sql.append("COUNT(1)");
+	} else {
+	    sql.append(criteria.getAllColumns().stream().map(c -> c.getColumnName()).collect(Collectors.joining(", ")));
+	}
 	sql.append(" FROM " + criteria.getTableName());
 	sql.append(" WHERE 1=1");
 	criteria.getEnabledColumns().stream().filter(JdbcColumn::isValueSet).forEach(c -> {
 	    sql.append(" AND ");
 	    c.where(sql);
 	});
-	if (criteria.getOrderByColumns().count() > 0) {
+	if (!count && criteria.getOrderByColumns().count() > 0) {
 	    sql.append(" ORDER BY ");
 	    String orderBy = criteria.getOrderByColumns().map(oc -> oc.getColumnName() + " " + oc.getOrderBy().name()).collect(Collectors.joining(", "));
 	    sql.append(orderBy);
@@ -68,7 +77,7 @@ public abstract class QueryExecutor<T> {
 	if (failure.isPresent()) {
 	    throw failure.get();
 	}
-	if (criteria.getMaxResults() > JdbcCriteria.UNLIMITED_RESULTS) {
+	if (!count && criteria.getMaxResults() > JdbcCriteria.UNLIMITED_RESULTS) {
 	    stm.setMaxRows(criteria.getMaxResults());
 	}
 	return stm.executeQuery();

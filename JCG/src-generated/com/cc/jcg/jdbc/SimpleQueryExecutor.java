@@ -7,8 +7,8 @@ import java.util.Map;
 public class SimpleQueryExecutor
         extends QueryExecutor<SimpleEntity> {
     
-    public SimpleQueryExecutor(JdbcCriteria criteria) {
-        super(criteria);
+    public SimpleQueryExecutor(JdbcCriteria arg0) {
+        super(arg0);
     }
     
     @Override

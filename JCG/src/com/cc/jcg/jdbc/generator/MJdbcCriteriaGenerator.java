@@ -230,10 +230,16 @@ public class MJdbcCriteriaGenerator {
 	fillEntity.throwsException(SQLException.class);
 	fillEntity.setBlockContent(filler);
 	cls.addField(executor, "executor").setFinal(true).setValue("new " + executor.getName() + "(this);");
+	// -------------------------------------------------------------------------------------------------------------------------
 	MMethod executeQuery = cls.addMethod("executeQuery", Collection.class, new MParameter(Connection.class, "connection"));
 	executeQuery.setGenericReturnType("<" + entity.getName() + ">").overrides();
 	executeQuery.throwsException(SQLException.class);
 	executeQuery.setBlockContent("return executor.executeQuery(connection);");
+	// -------------------------------------------------------------------------------------------------------------------------
+	MMethod count = cls.addMethod("count", long.class, new MParameter(Connection.class, "connection"));
+	count.overrides();
+	count.throwsException(SQLException.class);
+	count.setBlockContent("return executor.count(connection);");
 	// -------------------------------------------------------------------------------------------------------------------------
     }
 }
