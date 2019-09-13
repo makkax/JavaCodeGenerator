@@ -50,7 +50,7 @@ public abstract class QueryExecutor<T> {
 	});
 	if (criteria.getOrderByColumns().count() > 0) {
 	    sql.append(" ORDER BY ");
-	    String orderBy = criteria.getOrderByColumns().map(oc -> oc.getColumnName() + " " + (oc.getOrderBy().get() < 0 ? "DESC" : "ASC")).collect(Collectors.joining(", "));
+	    String orderBy = criteria.getOrderByColumns().map(oc -> oc.getColumnName() + " " + oc.getOrderBy().name()).collect(Collectors.joining(", "));
 	    sql.append(orderBy);
 	}
 	System.out.println(sql.toString());

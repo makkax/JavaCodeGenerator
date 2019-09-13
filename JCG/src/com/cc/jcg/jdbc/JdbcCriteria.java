@@ -44,7 +44,7 @@ public interface JdbcCriteria {
     }
 
     default Stream<JdbcColumn<?>> getOrderByColumns() {
-	return getAllColumns().stream().filter(c -> c.getOrderBy().get() != 0);
+	return getAllColumns().stream().filter(c -> c.getOrderBy() != null && c.getOrderBy() != JdbcOrderBy.NONE);
     }
 
     default Optional<JdbcColumn<?>> getJdbcColumnByName(String name) {
