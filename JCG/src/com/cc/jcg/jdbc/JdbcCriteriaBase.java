@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -107,6 +108,7 @@ public abstract class JdbcCriteriaBase
 	    private boolean enabled = true;
 	    private String operator = JdbcColumnValue.super.getOperator();
 	    private final T defaultValue = getValue();
+	    private final AtomicInteger orderBy = new AtomicInteger(0);
 
 	    @Override
 	    public final Class<T> getValueType() {
@@ -176,6 +178,12 @@ public abstract class JdbcCriteriaBase
 	    @Override
 	    public void resetValue() {
 		setValue(defaultValue);
+		orderBy.set(0);
+	    }
+
+	    @Override
+	    public AtomicInteger getOrderBy() {
+		return orderBy;
 	    }
 	};
 	columns.add(column);
@@ -191,6 +199,7 @@ public abstract class JdbcCriteriaBase
 	    private boolean enabled = true;
 	    private String operator = JdbcColumnValues.super.getOperator();
 	    private final List<T> defaultValues = getValues();
+	    private final AtomicInteger orderBy = new AtomicInteger(0);
 
 	    @Override
 	    public final Class<T> getValueType() {
@@ -260,6 +269,12 @@ public abstract class JdbcCriteriaBase
 	    @Override
 	    public void resetValue() {
 		setValue(defaultValues);
+		orderBy.set(0);
+	    }
+
+	    @Override
+	    public AtomicInteger getOrderBy() {
+		return orderBy;
 	    }
 	};
 	columns.add(column);

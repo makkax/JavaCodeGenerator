@@ -79,7 +79,7 @@ public class SimpleCriteria
         this.items = items;
     }
     
-    public void setItem(String value) {
+    public final void setItem(String value) {
         setItems(Collections.singletonList(value));
     }
     

@@ -48,6 +48,11 @@ public abstract class QueryExecutor<T> {
 	    sql.append(" AND ");
 	    c.where(sql);
 	});
+	if (criteria.getOrderByColumns().count() > 0) {
+	    sql.append(" ORDER BY ");
+	    String orderBy = criteria.getOrderByColumns().map(oc -> oc.getColumnName() + " " + (oc.getOrderBy().get() < 0 ? "DESC" : "ASC")).collect(Collectors.joining(", "));
+	    sql.append(orderBy);
+	}
 	System.out.println(sql.toString());
 	PreparedStatement stm = connection.prepareStatement(sql.toString(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 	stm.setFetchDirection(ResultSet.FETCH_FORWARD);
