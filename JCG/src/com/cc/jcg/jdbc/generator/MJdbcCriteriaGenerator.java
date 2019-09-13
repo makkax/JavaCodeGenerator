@@ -100,7 +100,10 @@ public class MJdbcCriteriaGenerator {
 	    name.append(name.toString().isEmpty() ? "" : ".");
 	    name.append(tableName);
 	    if (tablesFilter.test(name.toString())) {
+		System.out.println("x " + name);
 		generateJdbcCriteria(tableName, connection, columnsFilter);
+	    } else {
+		System.out.println("- " + name);
 	    }
 	}
     }
@@ -157,7 +160,11 @@ public class MJdbcCriteriaGenerator {
 	String clsName = MFunctions.camelize(MFunctions.labelize(MFunctions.constantize(tableName)).replace(" ", ""));
 	MClass cls = pckg.newClass(JdbcCriteria.class, clsName.concat("Criteria"));
 	cls.setSuperclass(JdbcCriteriaBase.class);
-	cls.overrideConstructors();
+	cls.overrideConstructors().forEach(cstr -> {
+	    if (cstr.getParameters().isEmpty()) {
+		cstr.setBlockContent("this(\"" + tableName + "\");");
+	    }
+	});
 	MMethod addColumns = cls.addMethod("addColumns", void.class).makeProtected().overrides();
 	StringBuffer addColumnsCode = new StringBuffer();
 	for (MJdbcColumnDef cdef : columnDefs) {
@@ -182,7 +189,7 @@ public class MJdbcCriteriaGenerator {
 	    String fieldName = MFunctions.fieldname(MFunctions.labelize(cdef.getColumnName()).replace(" ", ""));
 	    MField fld = entity.addField(cdef.getValueType(), fieldName);
 	    AccessorMethods accessors = fld.addAccessorMethods();
-	    //	e.setActive(rs.getBoolean(columns.get("ACTIVE")));
+	    // e.setActive(rs.getBoolean(columns.get("ACTIVE")));
 	    String getRs = MFunctions.camelize(fld.getType().getSimpleName());
 	    String getCol = cdef.getColumnName();
 	    filler.append("e." + accessors.setter().getName() + "(rs.get" + getRs + "(columns.get(\"" + getCol + "\")));\n");

@@ -1,12 +1,12 @@
 package com.cc.jcg.jdbc;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Properties;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -43,19 +43,30 @@ class MJdbcCriteriaGeneratorTest {
     @Test
     void test2() throws Exception {
 	// ----------------------------------------------------------------------------------------------------------------
+	// gen.src.dir, gen.pckg
+	// jdbc.url, jdbc.username, jdbc.password
+	// table.names
+	// ----------------------------------------------------------------------------------------------------------------
+	ConnectionProperties properties = new ConnectionProperties("database-connection.properties");
+	// ----------------------------------------------------------------------------------------------------------------
 	MBundle.EXCLUDE_GENERATED_ANNOTATION.set(false);
 	MBundle.GENERATE_READONLY.set(true);
 	// ----------------------------------------------------------------------------------------------------------------
-	MBundle bundle = new MBundle(new File("src-generated"));
-	MPackage pckg = bundle.newPackage("com.cc.jcg.jdbc");
+	MBundle bundle = new MBundle(new File(properties.getProperty("gen.src.dir")));
+	MPackage pckg = bundle.newPackage(properties.getProperty("gen.pckg"));
 	// ----------------------------------------------------------------------------------------------------------------
 	MJdbcCriteriaGenerator generator = new MJdbcCriteriaGenerator(pckg);
-	Properties properties = new Properties();
-	// jdbc.url, jdbc.username, jdbc.password
-	properties.load(new FileInputStream("database-connection.properties"));
 	Connection connection = new JDBCConnectionProviderOracle(properties).getNewConnection();
+	List<String> tables = Arrays.asList(properties.getProperty("table.names").split(","));
 	generator.generateJdbcCriterias(connection, name -> {
-	    return name.equals(properties.getProperty("table.name"));
+	    for (String table : tables) {
+		if (table.equals(name)) {
+		    return true;
+		} else if (name.matches(table)) {
+		    return true;
+		}
+	    }
+	    return false;
 	});
 	// ----------------------------------------------------------------------------------------------------------------
 	bundle.generateCode(false);
