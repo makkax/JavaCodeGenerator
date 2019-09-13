@@ -2,6 +2,8 @@ package com.cc.jcg.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public interface JdbcColumnValue<T>
@@ -17,8 +19,18 @@ public interface JdbcColumnValue<T>
     }
 
     @Override
+    default List<String> getOperators() {
+	return Arrays.asList("=", "<>", "LIKE", "<", ">", "<=", ">=");
+    }
+
+    @Override
+    default String getOperator() {
+	return "=";
+    }
+
+    @Override
     default void where(StringBuffer sql) {
-	sql.append(getColumnName() + " = ?");
+	sql.append(getColumnName() + " " + getOperator() + " ?");
     }
 
     @Override

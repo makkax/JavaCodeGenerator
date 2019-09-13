@@ -2,6 +2,7 @@ package com.cc.jcg.jdbc;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public interface JdbcColumn<T>
@@ -22,6 +23,14 @@ public interface JdbcColumn<T>
     void setLabel(String label);
 
     boolean isValueSet();
+
+    void resetValue();
+
+    List<String> getOperators();
+
+    String getOperator();
+
+    void setOperator(String operator);
 
     @Override
     default int compareTo(JdbcColumn o) {
