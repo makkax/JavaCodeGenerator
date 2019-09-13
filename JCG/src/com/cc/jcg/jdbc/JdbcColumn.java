@@ -1,5 +1,9 @@
 package com.cc.jcg.jdbc;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public interface JdbcColumn<T>
 	extends Comparable<JdbcColumn<?>>, Enabled {
 
@@ -31,4 +35,8 @@ public interface JdbcColumn<T>
 	}
 	return so1.compareTo(so2);
     }
+
+    void where(StringBuffer sql);
+
+    void properties(PreparedStatement stm, AtomicInteger parameterIndex) throws SQLException;
 }
