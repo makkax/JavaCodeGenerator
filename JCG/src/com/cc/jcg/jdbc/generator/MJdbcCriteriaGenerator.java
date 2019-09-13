@@ -63,6 +63,21 @@ public class MJdbcCriteriaGenerator {
 	this.visitor = null;
     }
 
+    public final MJdbcCriteriaGenerator considerTablesAndViews() {
+	types = new String[] { "TABLE", "VIEW" };
+	return this;
+    }
+
+    public final MJdbcCriteriaGenerator considerTablesOnly() {
+	types = new String[] { "TABLE" };
+	return this;
+    }
+
+    public final MJdbcCriteriaGenerator considerViewsOnly() {
+	types = new String[] { "VIEW" };
+	return this;
+    }
+
     public void generateJdbcCriterias(Connection connection) throws SQLException, ClassNotFoundException {
 	generateJdbcCriterias(connection, ALL_TABLES, ALL_COLUMNS);
     }
@@ -101,7 +116,7 @@ public class MJdbcCriteriaGenerator {
 	    name.append(tableName);
 	    if (tablesFilter.test(name.toString())) {
 		System.out.println("x " + name);
-		generateJdbcCriteria(tableName, connection, columnsFilter);
+		generateJdbcCriteria(rs.getString("TABLE_CAT"), rs.getString("TABLE_SCHEM"), tableName, connection, columnsFilter);
 	    } else {
 		System.out.println("- " + name);
 	    }
@@ -109,13 +124,13 @@ public class MJdbcCriteriaGenerator {
     }
 
     public void generateJdbcCriteria(String tableName, Connection connection) throws SQLException, ClassNotFoundException {
-	generateJdbcCriteria(tableName, connection, ALL_COLUMNS);
+	generateJdbcCriteria(null, null, tableName, connection, ALL_COLUMNS);
     }
 
-    public void generateJdbcCriteria(String tableName, Connection connection, Predicate<MJdbcColumnDef> columnsFilter) throws SQLException, ClassNotFoundException {
+    public void generateJdbcCriteria(String catalog, String schema, String table, Connection connection, Predicate<MJdbcColumnDef> columnsFilter) throws SQLException, ClassNotFoundException {
 	Collection<MJdbcColumnDef> columnDefs = new ArrayList<>();
 	DatabaseMetaData metaData = connection.getMetaData();
-	ResultSet rs = metaData.getColumns(null, null, tableName, null);
+	ResultSet rs = metaData.getColumns(catalog, schema, table, null);
 	while (rs.next()) {
 	    // -----------------------------------------------------------------------
 	    // for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
@@ -149,7 +164,7 @@ public class MJdbcCriteriaGenerator {
 		columnDefs.add(col);
 	    }
 	}
-	generateJdbcCriteria(tableName, columnDefs);
+	generateJdbcCriteria(table, columnDefs);
     }
 
     public void generateJdbcCriteria(String tableName, Collection<MJdbcColumnDef> columnDefs) throws ClassNotFoundException {
