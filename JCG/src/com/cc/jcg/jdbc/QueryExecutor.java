@@ -41,14 +41,16 @@ public abstract class QueryExecutor<T> {
     protected ResultSet execute(Connection connection) throws SQLException {
 	StringBuffer sql = new StringBuffer();
 	sql.append("SELECT ");
-	criteria.getAllColumns().stream().map(c -> c.getColumnName()).collect(Collectors.joining(", "));
+	sql.append(criteria.getAllColumns().stream().map(c -> c.getColumnName()).collect(Collectors.joining(", ")));
 	sql.append(" FROM " + criteria.getTableName());
 	sql.append(" WHERE 1=1");
 	criteria.getEnabledColumns().stream().filter(JdbcColumn::isValueSet).forEach(c -> {
 	    sql.append(" AND ");
 	    c.where(sql);
 	});
-	PreparedStatement stm = connection.prepareStatement(sql.toString());
+	System.out.println(sql.toString());
+	PreparedStatement stm = connection.prepareStatement(sql.toString(), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+	stm.setFetchDirection(ResultSet.FETCH_FORWARD);
 	AtomicInteger parameterIndex = new AtomicInteger(1);
 	Optional<SQLException> failure = Optional.empty();
 	criteria.getEnabledColumns().stream().filter(JdbcColumn::isValueSet).forEach(c -> {
@@ -60,6 +62,9 @@ public abstract class QueryExecutor<T> {
 	});
 	if (failure.isPresent()) {
 	    throw failure.get();
+	}
+	if (criteria.getMaxResults() > JdbcCriteria.UNLIMITED_RESULTS) {
+	    stm.setMaxRows(criteria.getMaxResults());
 	}
 	return stm.executeQuery();
     }
