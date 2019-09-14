@@ -20,6 +20,26 @@ public interface JdbcCriteria {
 
     Collection<JdbcColumn<?>> getAllColumns();
 
+    String getWhereLogic();
+
+    void setWhereLogic(String logic);
+
+    default void whereLogic_AND() {
+	setWhereLogic("AND");
+    }
+
+    default void whereLogic_OR() {
+	setWhereLogic("OR");
+    }
+
+    default void whereLogic_AND_NOT() {
+	setWhereLogic("AND NOT");
+    }
+
+    default void whereLogic_OR_NOT() {
+	setWhereLogic("OR NOT");
+    }
+
     default Collection<JdbcColumn<?>> getEnabledColumns() {
 	return getAllColumns().stream().filter(JdbcColumn::isEnabled).collect(Collectors.toList());
     }

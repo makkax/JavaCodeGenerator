@@ -13,6 +13,7 @@ public abstract class JdbcCriteriaBase
     private String tableName;
     private int maxResults;
     protected final Collection<JdbcColumn<?>> columns = Collections.synchronizedSet(new TreeSet<>());
+    private String whereLogic = "AND";
 
     public JdbcCriteriaBase() {
 	super();
@@ -97,6 +98,19 @@ public abstract class JdbcCriteriaBase
 	    return r.toString();
 	}
 	return s;
+    }
+
+    @Override
+    public final synchronized String getWhereLogic() {
+	if (whereLogic == null || whereLogic.trim().isEmpty()) {
+	    whereLogic = "AND";
+	}
+	return whereLogic;
+    }
+
+    @Override
+    public final synchronized void setWhereLogic(String logic) {
+	whereLogic = logic;
     }
 
     public <T> JdbcColumnValue<T> addJdbcColumnValue(String columnName, Class<T> valueType, Supplier<T> getter, Consumer<T> setter) {

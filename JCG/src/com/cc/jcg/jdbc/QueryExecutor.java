@@ -52,9 +52,11 @@ public abstract class QueryExecutor<T> {
 	    sql.append(criteria.getAllColumns().stream().map(c -> c.getColumnName()).collect(Collectors.joining(", ")));
 	}
 	sql.append(" FROM " + criteria.getTableName());
-	sql.append(" WHERE 1=1");
+	sql.append(" WHERE");
 	criteria.getEnabledColumns().stream().filter(JdbcColumn::isValueSet).forEach(c -> {
-	    sql.append(" AND ");
+	    if (!sql.toString().endsWith(" WHERE")) {
+		sql.append(" " + criteria.getWhereLogic() + " ");
+	    }
 	    c.where(sql);
 	});
 	if (!count && criteria.getOrderByColumns().count() > 0) {
