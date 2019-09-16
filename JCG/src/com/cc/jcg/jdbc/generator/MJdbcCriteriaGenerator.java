@@ -1,5 +1,9 @@
 package com.cc.jcg.jdbc.generator;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -10,6 +14,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -24,23 +29,12 @@ import com.cc.jcg.jdbc.JdbcCriteria;
 import com.cc.jcg.jdbc.JdbcCriteriaBase;
 import com.cc.jcg.jdbc.QueryByCriteria;
 import com.cc.jcg.jdbc.QueryExecutor;
+import com.cc.jcg.jdbc.connection.ConnectionProperties;
 
 public class MJdbcCriteriaGenerator {
 
-    public static final Predicate<String> ALL_TABLES = new Predicate<String>() {
-
-	@Override
-	public boolean test(String t) {
-	    return true;
-	}
-    };
-    public static final Predicate<MJdbcColumnDef> ALL_COLUMNS = new Predicate<MJdbcColumnDef>() {
-
-	@Override
-	public boolean test(MJdbcColumnDef t) {
-	    return true;
-	}
-    };
+    public static final Predicate<String> ALL_TABLES = t -> true;
+    public static final Predicate<MJdbcColumnDef> ALL_COLUMNS = t -> true;
     private final MPackage pckg;
     private String types[] = { "TABLE", "VIEW" };
     private final Consumer<MJdbcColumnDef> visitor;
@@ -79,6 +73,51 @@ public class MJdbcCriteriaGenerator {
 	return this;
     }
 
+    public Properties extractAllTableNames(Connection connection) throws SQLException {
+	Properties props = new Properties();
+	DatabaseMetaData metaData = connection.getMetaData();
+	ResultSet rs = metaData.getTables(null, null, null, types);
+	while (rs.next()) {
+	    StringBuffer name = new StringBuffer();
+	    String catalog = rs.getString("TABLE_CAT");
+	    if (catalog != null) {
+		name.append(catalog);
+	    }
+	    String schema = rs.getString("TABLE_SCHEM");
+	    if (schema != null) {
+		name.append(name.toString().isEmpty() ? "" : ".");
+		name.append(schema);
+	    }
+	    String tableName = rs.getString("TABLE_NAME");
+	    name.append(name.toString().isEmpty() ? "" : ".");
+	    name.append(tableName);
+	    props.put(name.toString(), false);
+	}
+	return props;
+    }
+
+    private static Predicate<String> toTablePredicate(Properties props) {
+	return name -> {
+	    if (props.containsKey(name)) {
+		return props.getProperty(name).toLowerCase().equals("true");
+	    }
+	    return false;
+	};
+    }
+
+    public ConnectionProperties updateAllTableNames(Connection connection, File propertiesFile) throws FileNotFoundException, IOException, SQLException {
+	if (!propertiesFile.exists()) {
+	    new Properties().store(new FileOutputStream(propertiesFile), null);
+	}
+	ConnectionProperties stored = new ConnectionProperties(propertiesFile);
+	Properties current = extractAllTableNames(connection);
+	stored.keySet().retainAll(current.keySet());
+	current.keySet().removeAll(stored.keySet());
+	stored.putAll(current);
+	stored.save();
+	return stored;
+    }
+
     public void generateJdbcCriterias(Connection connection) throws SQLException, ClassNotFoundException {
 	generateJdbcCriterias(connection, ALL_TABLES, ALL_COLUMNS);
     }
@@ -87,21 +126,25 @@ public class MJdbcCriteriaGenerator {
 	generateJdbcCriterias(connection, tablesFilter, ALL_COLUMNS);
     }
 
+    public void generateJdbcCriterias(Connection connection, Properties tables) throws SQLException, ClassNotFoundException {
+	generateJdbcCriterias(connection, toTablePredicate(tables), ALL_COLUMNS);
+    }
+
     public void generateJdbcCriterias(Connection connection, Predicate<String> tablesFilter, Predicate<MJdbcColumnDef> columnsFilter) throws SQLException, ClassNotFoundException {
 	DatabaseMetaData metaData = connection.getMetaData();
 	ResultSet rs = metaData.getTables(null, null, null, types);
 	while (rs.next()) {
-	    // -----------------------------------------------------------------------
+	    // -------------------------------------------------------------------------------------------
 	    // for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
 	    // System.out.println(rs.getMetaData().getColumnName(i));
 	    // }
-	    // -----------------------------------------------------------------------
+	    // -------------------------------------------------------------------------------------------
 	    // TABLE_CAT
 	    // TABLE_SCHEM
 	    // TABLE_NAME
 	    // TABLE_TYPE
 	    // REMARKS
-	    // -----------------------------------------------------------------------
+	    // -------------------------------------------------------------------------------------------
 	    StringBuffer name = new StringBuffer();
 	    String catalog = rs.getString("TABLE_CAT");
 	    if (catalog != null) {
@@ -133,11 +176,11 @@ public class MJdbcCriteriaGenerator {
 	DatabaseMetaData metaData = connection.getMetaData();
 	ResultSet rs = metaData.getColumns(catalog, schema, table, null);
 	while (rs.next()) {
-	    // -----------------------------------------------------------------------
+	    // -------------------------------------------------------------------------------------------
 	    // for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
 	    // System.out.println(rs.getMetaData().getColumnName(i));
 	    // }
-	    // -----------------------------------------------------------------------
+	    // -------------------------------------------------------------------------------------------
 	    // TABLE_CAT
 	    // TABLE_SCHEM
 	    // TABLE_NAME
@@ -156,8 +199,11 @@ public class MJdbcCriteriaGenerator {
 	    // CHAR_OCTET_LENGTH
 	    // ORDINAL_POSITION
 	    // IS_NULLABLE
-	    // -----------------------------------------------------------------------
-	    // System.out.println(rs.getString("TABLE_NAME") + "." + rs.getString("COLUMN_NAME") + "," + rs.getString("DATA_TYPE") + "," + rs.getString("TYPE_NAME") + "," + rs.getString("COLUMN_DEF") + "," + rs.getString("SQL_DATA_TYPE"));
+	    // -------------------------------------------------------------------------------------------
+	    // System.out.println(rs.getString("TABLE_NAME") + "." + rs.getString("COLUMN_NAME") + "," 
+	    //	    + rs.getString("DATA_TYPE") + "," + rs.getString("TYPE_NAME") + "," 
+	    //	    + rs.getString("COLUMN_DEF") + "," + rs.getString("SQL_DATA_TYPE"));
+	    // -------------------------------------------------------------------------------------------
 	    String columnName = rs.getString("COLUMN_NAME");
 	    Class<?> javaType = SQLTypeMap.toClass(rs.getInt("DATA_TYPE"));
 	    MJdbcColumnDefImpl col = new MJdbcColumnDefImpl(columnName, javaType);
