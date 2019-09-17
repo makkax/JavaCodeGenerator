@@ -23,6 +23,7 @@ public abstract class QueryExecutor<T> {
 
     public long count(Connection connection) throws SQLException {
 	ResultSet rs = execute(connection, true);
+	rs.next();
 	return rs.getLong(1);
     }
 
