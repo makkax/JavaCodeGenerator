@@ -82,10 +82,10 @@ public class ExamplesTest {
 	final MMethod m4 = cls.addMethod("getSimpleMethod4", scls, new MParameter(enm, "enumParameter")).returnNull();
 	// JavaFile
 	pckg.addJavaFiles(new File("src-generated/com/cc/jcg/examples"));
-	final MType javaFile = pckg.addJavaFile(new File("src-eclipse/com/cc/jcg/test/types/HashAndEquals.java"), "EqualsAndHash");
-	pckg.addJavaFile(new File("src-eclipse/com/cc/jcg/test/types/RefType.java"), "Santorini");
+	final MType javaFile = pckg.addJavaFile(new File("src-test/com/cc/jcg/test/types/HashAndEquals.java"), "EqualsAndHash");
+	pckg.addJavaFile(new File("src-test/com/cc/jcg/test/types/RefType.java"), "Santorini");
 	final MMethod m5 = cls.addMethod("getJavaFile", javaFile, new MParameter(javaFile, "file")).returnNull();
-	final MJavaFile javaFileGeneric = pckg.addJavaFile(new File("src-eclipse/com/cc/jcg/test/types/TypeWithGeneric.java"));
+	final MJavaFile javaFileGeneric = pckg.addJavaFile(new File("src-test/com/cc/jcg/test/types/TypeWithGeneric.java"));
 	javaFileGeneric.getReplacements().put("Integer", "BigDecimal");
 	javaFileGeneric.addImport(BigDecimal.class);
 	// 3

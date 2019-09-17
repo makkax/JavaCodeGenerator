@@ -11,7 +11,7 @@ import com.cc.jcg.MPackage;
 
 class MJsonGeneratorTest {
 
-    private final File file = new File("src-eclipse/com/cc/jcg/json/order.json");
+    private final File file = new File("src-test/com/cc/jcg/json/order.json");
 
     @Test
     void test1() throws Exception {
@@ -40,7 +40,7 @@ class MJsonGeneratorTest {
 	assertNotNull(order.getBillingAddress());
 	assertNotNull(order.getTaxes());
 	System.out.println(MJsonGenerator.toJson(order));
-	MJsonGenerator.toJsonFile(order, new File("src-eclipse/com/cc/jcg/json/order2.json"));
+	MJsonGenerator.toJsonFile(order, new File("src-test/com/cc/jcg/json/order2.json"));
 	// ----------------------------------------------------------------------------------------------------------------
     }
 }

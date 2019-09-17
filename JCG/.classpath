@@ -7,7 +7,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src-eclipse">
+	<classpathentry kind="src" path="src-test">
 		<attributes>
 			<attribute name="ignore_optional_problems" value="true"/>
 		</attributes>
