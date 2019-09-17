@@ -1,3 +1,4 @@
 /.settings/
 /target/
 /database-connection.properties
+/tables.properties
