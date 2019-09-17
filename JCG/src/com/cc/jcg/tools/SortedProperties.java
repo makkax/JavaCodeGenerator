@@ -1,4 +1,4 @@
-package com.cc.jcg.jdbc.connection;
+package com.cc.jcg.tools;
 
 import java.util.Collections;
 import java.util.Enumeration;

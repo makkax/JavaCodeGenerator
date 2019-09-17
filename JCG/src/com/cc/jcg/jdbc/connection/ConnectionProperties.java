@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.cc.jcg.tools.SortedProperties;
+
 public class ConnectionProperties
 	extends SortedProperties {
 
