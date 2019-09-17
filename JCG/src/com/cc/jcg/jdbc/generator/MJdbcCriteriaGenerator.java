@@ -78,22 +78,27 @@ public class MJdbcCriteriaGenerator {
 	DatabaseMetaData metaData = connection.getMetaData();
 	ResultSet rs = metaData.getTables(null, null, null, types);
 	while (rs.next()) {
-	    StringBuffer name = new StringBuffer();
-	    String catalog = rs.getString("TABLE_CAT");
-	    if (catalog != null) {
-		name.append(catalog);
-	    }
-	    String schema = rs.getString("TABLE_SCHEM");
-	    if (schema != null) {
-		name.append(name.toString().isEmpty() ? "" : ".");
-		name.append(schema);
-	    }
-	    String tableName = rs.getString("TABLE_NAME");
-	    name.append(name.toString().isEmpty() ? "" : ".");
-	    name.append(tableName);
+	    StringBuffer name = getLongTableName(rs);
 	    props.put(name.toString(), false);
 	}
 	return props;
+    }
+
+    private StringBuffer getLongTableName(ResultSet rs) throws SQLException {
+	StringBuffer name = new StringBuffer();
+	String catalog = rs.getString("TABLE_CAT");
+	if (catalog != null) {
+	    name.append(catalog);
+	}
+	String schema = rs.getString("TABLE_SCHEM");
+	if (schema != null) {
+	    name.append(name.toString().isEmpty() ? "" : ".");
+	    name.append(schema);
+	}
+	String tableName = rs.getString("TABLE_NAME");
+	name.append(name.toString().isEmpty() ? "" : ".");
+	name.append(tableName);
+	return name;
     }
 
     private static Predicate<String> toTablePredicate(Properties props) {
@@ -145,22 +150,10 @@ public class MJdbcCriteriaGenerator {
 	    // TABLE_TYPE
 	    // REMARKS
 	    // -------------------------------------------------------------------------------------------
-	    StringBuffer name = new StringBuffer();
-	    String catalog = rs.getString("TABLE_CAT");
-	    if (catalog != null) {
-		name.append(catalog);
-	    }
-	    String schema = rs.getString("TABLE_SCHEM");
-	    if (schema != null) {
-		name.append(name.toString().isEmpty() ? "" : ".");
-		name.append(schema);
-	    }
-	    String tableName = rs.getString("TABLE_NAME");
-	    name.append(name.toString().isEmpty() ? "" : ".");
-	    name.append(tableName);
+	    StringBuffer name = getLongTableName(rs);
 	    if (tablesFilter.test(name.toString())) {
 		System.out.println("x " + name);
-		generateJdbcCriteria(rs.getString("TABLE_CAT"), rs.getString("TABLE_SCHEM"), tableName, connection, columnsFilter);
+		generateJdbcCriteria(rs.getString("TABLE_CAT"), rs.getString("TABLE_SCHEM"), rs.getString("TABLE_NAME"), connection, columnsFilter);
 	    } else {
 		System.out.println("- " + name);
 	    }
