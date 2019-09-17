@@ -6,11 +6,11 @@ import java.time.LocalDate;
 public class SomeClassExtension
         extends SomeClass {
     
-    public SomeClassExtension(String name, LocalDate date, SomeClass other) {
-        super(name, date, other);
+    public SomeClassExtension(String arg0, LocalDate arg1, SomeClass arg2) {
+        super(arg0, arg1, arg2);
     }
     
-    public SomeClassExtension(String name, LocalDate date) {
-        super(name, date);
+    public SomeClassExtension(String arg0, LocalDate arg1) {
+        super(arg0, arg1);
     }
 }
