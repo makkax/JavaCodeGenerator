@@ -42,7 +42,7 @@ class MJdbcCriteriaGeneratorTest {
 	// ----------------------------------------------------------------------------------------------------------------
     }
 
-    // @Test
+    @Test
     void test2() throws Exception {
 	// ----------------------------------------------------------------------------------------------------------------
 	// gen.src.dir, gen.pckg
@@ -59,6 +59,9 @@ class MJdbcCriteriaGeneratorTest {
 	// ----------------------------------------------------------------------------------------------------------------
 	MJdbcCriteriaGenerator generator = new MJdbcCriteriaGenerator(pckg).considerTablesOnly();
 	Connection connection = new JDBCConnectionProviderOracle(properties).getNewConnection();
+	// ----------------------------------------------------------------------------------------------------------------
+	generator.updateAllTableNames(connection, new File("tables.properties"));
+	// ----------------------------------------------------------------------------------------------------------------
 	List<String> tables = Arrays.asList(properties.getProperty("table.names").split(","));
 	generator.generateJdbcCriterias(connection, name -> {
 	    if (name.startsWith(properties.getJdbcUsername() + ".")) {
