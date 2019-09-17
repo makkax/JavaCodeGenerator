@@ -79,7 +79,7 @@ public class MJdbcCriteriaGenerator {
 	ResultSet rs = metaData.getTables(null, null, null, types);
 	while (rs.next()) {
 	    StringBuffer name = getLongTableName(rs);
-	    props.put(name.toString(), false);
+	    props.put(name.toString(), "false");
 	}
 	return props;
     }
@@ -114,7 +114,7 @@ public class MJdbcCriteriaGenerator {
 	if (!propertiesFile.exists()) {
 	    new Properties().store(new FileOutputStream(propertiesFile), null);
 	}
-	ConnectionProperties stored = new ConnectionProperties(propertiesFile);
+	ConnectionProperties stored = new ConnectionProperties(propertiesFile, true);
 	Properties current = extractAllTableNames(connection);
 	stored.keySet().retainAll(current.keySet());
 	current.keySet().removeAll(stored.keySet());
@@ -193,9 +193,9 @@ public class MJdbcCriteriaGenerator {
 	    // ORDINAL_POSITION
 	    // IS_NULLABLE
 	    // -------------------------------------------------------------------------------------------
-	    // System.out.println(rs.getString("TABLE_NAME") + "." + rs.getString("COLUMN_NAME") + "," 
-	    //	    + rs.getString("DATA_TYPE") + "," + rs.getString("TYPE_NAME") + "," 
-	    //	    + rs.getString("COLUMN_DEF") + "," + rs.getString("SQL_DATA_TYPE"));
+	    // System.out.println(rs.getString("TABLE_NAME") + "." + rs.getString("COLUMN_NAME") + ","
+	    // + rs.getString("DATA_TYPE") + "," + rs.getString("TYPE_NAME") + ","
+	    // + rs.getString("COLUMN_DEF") + "," + rs.getString("SQL_DATA_TYPE"));
 	    // -------------------------------------------------------------------------------------------
 	    String columnName = rs.getString("COLUMN_NAME");
 	    Class<?> javaType = SQLTypeMap.toClass(rs.getInt("DATA_TYPE"));

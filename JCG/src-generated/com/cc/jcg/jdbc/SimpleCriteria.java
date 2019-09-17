@@ -18,12 +18,12 @@ public class SimpleCriteria
     private List<String> items;
     private final SimpleQueryExecutor executor = new SimpleQueryExecutor(this);
     
-    public SimpleCriteria(String arg0, int arg1) {
-        super(arg0, arg1);
+    public SimpleCriteria(String tableName, int maxResults) {
+        super(tableName, maxResults);
     }
     
-    public SimpleCriteria(String arg0) {
-        super(arg0);
+    public SimpleCriteria(String tableName) {
+        super(tableName);
     }
     
     public SimpleCriteria() {
