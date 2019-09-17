@@ -275,6 +275,10 @@ public class MJdbcCriteriaGenerator {
 	executeQuery.throwsException(SQLException.class);
 	executeQuery.setBlockContent("return executor.executeQuery(connection);");
 	// -------------------------------------------------------------------------------------------------------------------------
+	MMethod executeQuery2 = cls.addMethod("executeQuery", void.class, new MParameter(Connection.class, "connection"), new MParameter(Consumer.class, "<" + entity.getName() + ">", "consumer"));
+	executeQuery2.throwsException(SQLException.class);
+	executeQuery2.setBlockContent("executor.executeQuery(connection, consumer);");
+	// -------------------------------------------------------------------------------------------------------------------------
 	MMethod count = cls.addMethod("count", long.class, new MParameter(Connection.class, "connection"));
 	count.overrides();
 	count.throwsException(SQLException.class);

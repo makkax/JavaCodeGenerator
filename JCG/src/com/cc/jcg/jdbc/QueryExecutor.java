@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public abstract class QueryExecutor<T> {
@@ -38,6 +39,17 @@ public abstract class QueryExecutor<T> {
 	    results.add(e);
 	}
 	return results;
+    }
+
+    public void executeQuery(Connection connection, Consumer<T> consumer) throws SQLException {
+	ResultSet rs = execute(connection, false);
+	Map<String, Integer> columns = new HashMap<>();
+	criteria.getAllColumns().forEach(c -> columns.put(c.getColumnName(), columns.size() + 1));
+	while (rs.next()) {
+	    T e = newEntity();
+	    fillEntity(e, rs, columns);
+	    consumer.accept(e);
+	}
     }
 
     protected abstract T newEntity();

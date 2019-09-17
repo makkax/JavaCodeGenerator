@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class SimpleCriteria
         extends JdbcCriteriaBase
@@ -86,6 +87,11 @@ public class SimpleCriteria
     @Override
     public Collection<SimpleEntity> executeQuery(Connection connection) throws SQLException {
         return executor.executeQuery(connection);
+    }
+    
+    @Override
+    public void executeQuery(Connection connection, Consumer<SimpleEntity> consumer) throws SQLException {
+        executor.executeQuery(connection, consumer);
     }
     
     @Override
