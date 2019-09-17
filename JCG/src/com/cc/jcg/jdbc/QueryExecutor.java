@@ -56,6 +56,8 @@ public abstract class QueryExecutor<T> {
 	criteria.getEnabledColumns().stream().filter(JdbcColumn::isValueSet).forEach(c -> {
 	    if (!sql.toString().endsWith(" WHERE")) {
 		sql.append(" " + criteria.getWhereLogic() + " ");
+	    } else {
+		sql.append(" ");
 	    }
 	    c.where(sql);
 	});
