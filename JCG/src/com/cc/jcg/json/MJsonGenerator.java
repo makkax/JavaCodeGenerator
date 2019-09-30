@@ -67,6 +67,13 @@ public class MJsonGenerator
 	return generateBean(name, json);
     }
 
+    public synchronized MClass generateJsonBeanFor(String jsonString, String name) throws FileNotFoundException, ClassNotFoundException {
+	maps.clear();
+	classes.clear();
+	Map<String, Object> json = gson.fromJson(jsonString, LinkedHashMap.class);
+	return generateBean(name, json);
+    }
+
     private MClass generateBean(String name, Map<String, Object> map) throws ClassNotFoundException {
 	List<MParameter> fields = new ArrayList<>();
 	map.forEach((key, value) -> {
