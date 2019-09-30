@@ -18,6 +18,7 @@ import com.cc.jcg.MClass;
 import com.cc.jcg.MFunctions;
 import com.cc.jcg.MPackage;
 import com.cc.jcg.MParameter;
+import com.cc.jcg.tools.Inflector;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
@@ -26,12 +27,14 @@ import com.google.gson.stream.JsonReader;
 public class MJsonGenerator
 	extends MFunctions {
 
+    private static final Inflector INFLECTOR = new Inflector();
     private final MPackage pckg;
     private final Gson gson;
     private final Map<String, Set<String>> maps;
     private final Map<String, MClass> classes;
     private String classesNamePrefix = "";
     private boolean addJsonBeanInterface = true;
+    private boolean listOfMapsToListOfBeans = false;
 
     public MJsonGenerator(MPackage pckg) {
 	super();
@@ -56,6 +59,15 @@ public class MJsonGenerator
 
     public synchronized MJsonGenerator setAddJsonBeanInterface(boolean addJsonBeanInterface) {
 	this.addJsonBeanInterface = addJsonBeanInterface;
+	return this;
+    }
+
+    public synchronized final boolean isListOfMapsToListOfBeans() {
+	return listOfMapsToListOfBeans;
+    }
+
+    public synchronized final MJsonGenerator setListOfMapsToListOfBeans(boolean listOfMapsToListOfBeans) {
+	this.listOfMapsToListOfBeans = listOfMapsToListOfBeans;
 	return this;
     }
 
@@ -107,7 +119,22 @@ public class MJsonGenerator
 			vTypes.add(v.getClass());
 		    }
 		    if (vTypes.size() == 1) {
-			fields.add(new MParameter(List.class, vTypes.stream().findFirst().get(), key));
+			Class<?> fType = vTypes.stream().findFirst().get();
+			if (Map.class.isAssignableFrom(fType)) {
+			    if (listOfMapsToListOfBeans) {
+				MClass subtype = generateBean(INFLECTOR.camelCase(INFLECTOR.singularize(key), true), (Map<String, Object>) values.stream().findFirst().get());
+				MParameter p = new MParameter(List.class, "<" + subtype.getName() + ">", key);
+				p.addImport(subtype);
+				fields.add(p);
+			    } else {
+				String generic = "<" + fType.getSimpleName().concat("<String, Object>") + ">";
+				MParameter p = new MParameter(List.class, generic, key);
+				p.addImport(fType);
+				fields.add(p);
+			    }
+			} else {
+			    fields.add(new MParameter(List.class, fType, key));
+			}
 		    } else {
 			fields.add(new MParameter(List.class, Object.class, key));
 		    }
