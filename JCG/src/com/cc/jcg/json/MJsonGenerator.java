@@ -122,7 +122,8 @@ public class MJsonGenerator
 			Class<?> fType = vTypes.stream().findFirst().get();
 			if (Map.class.isAssignableFrom(fType)) {
 			    if (listOfMapsToListOfBeans) {
-				MClass subtype = generateBean(INFLECTOR.camelCase(INFLECTOR.singularize(key), true), (Map<String, Object>) values.stream().findFirst().get());
+				String singular = INFLECTOR.camelCase(INFLECTOR.singularize(key), true);
+				MClass subtype = generateBean(singular, (Map<String, Object>) values.stream().findFirst().get());
 				MParameter p = new MParameter(List.class, "<" + subtype.getName() + ">", key);
 				p.addImport(subtype);
 				fields.add(p);
