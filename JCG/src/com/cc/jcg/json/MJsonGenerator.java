@@ -97,15 +97,15 @@ public class MJsonGenerator
 			MClass subtype = classes.get(key);
 			fields.add(new MParameter(subtype, key));
 		    } else {
-			String cName = camelize(key);
+			String cName = INFLECTOR.camelCase(key, true);
 			String fName = key;
 			if (maps.containsKey(key) && !maps.get(key).equals(valueKeys)) {
 			    int n = 2;
-			    while (classes.containsKey(camelize(key) + n)) {
+			    while (classes.containsKey(INFLECTOR.camelCase(key, true) + n)) {
 				n = n + 1;
 			    }
 			    key = key + n;
-			    cName = camelize(key);
+			    cName = INFLECTOR.camelCase(key, true);
 			}
 			MClass subtype = generateBean(cName, (Map<String, Object>) value);
 			fields.add(new MParameter(subtype, fName));
