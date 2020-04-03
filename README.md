@@ -136,6 +136,8 @@ public class User {
     private String email;
     private LocalDate birthday;
     private boolean active;
+    private List<Strin> tags;
+    private Map<String, User> friends;
     
     public User() {
         super();
