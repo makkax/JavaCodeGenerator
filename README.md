@@ -27,7 +27,7 @@ The current release is ***1.3***:
 </dependencies>
 ```
 
-## JavaCodeGenerator 1.2 API
+## JavaCodeGenerator 1.3 API
 
 https://makkax.github.io/JavaCodeGenerator
 
