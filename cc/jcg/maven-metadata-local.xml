@@ -3,12 +3,13 @@
   <groupId>cc</groupId>
   <artifactId>jcg</artifactId>
   <versioning>
-    <release>1.2</release>
+    <release>1.3</release>
     <versions>
       <version>1.0</version>
       <version>1.1</version>
       <version>1.2</version>
+      <version>1.3</version>
     </versions>
-    <lastUpdated>20190909115454</lastUpdated>
+    <lastUpdated>20200518200217</lastUpdated>
   </versioning>
 </metadata>
